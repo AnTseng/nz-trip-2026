@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#1e5d54">
+  <title>紐西蘭南島 2026</title>
+  <style>
+    :root {
+      --primary: #2a7c6f;
+      --primary-dark: #1e5d54;
+      --primary-light: #e6f2ef;
+      --accent: #c8956c;
+      --accent-light: #fdf0e5;
+      --bg: #f5f4f1;
+      --surface: #ffffff;
+      --text: #1c2b28;
+      --text-2: #5f7672;
+      --text-3: #94a5a1;
+      --border: #e4e8e7;
+      --shadow: 0 1px 3px rgba(0,0,0,0.06);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+      --r: 10px;
+      --r-sm: 7px;
+      --font: "PingFang TC","Noto Sans TC","Microsoft JhengHei",-apple-system,sans-serif;
+      --type-景點: #2a7c6f; --type-景點-bg: #e6f2ef;
+      --type-吃喝: #c8956c; --type-吃喝-bg: #fdf0e5;
+      --type-移動: #6889a0; --type-移動-bg: #e8f0f5;
+      --type-作業: #8b7da8; --type-作業-bg: #eeeaf5;
+      --type-住宿: #a08060; --type-住宿-bg: #f5efe8;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth;-webkit-tap-highlight-color:transparent}
+    body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+    a{color:var(--primary);text-decoration:none}
+
+    /* ===== Header ===== */
+    .header{background:linear-gradient(135deg,#1a4f47,#2a7c6f 40%,#3a9888);color:#fff;padding:2.5rem 1.5rem 2rem;text-align:center;position:relative}
+    .header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:14px;background:var(--bg);border-radius:14px 14px 0 0}
+    .header h1{font-size:1.4rem;font-weight:700;letter-spacing:.04em;margin-bottom:.2rem}
+    .header .sub{font-size:.8rem;opacity:.8;margin-bottom:.5rem}
+    .header .badges{display:flex;justify-content:center;gap:.5rem;flex-wrap:wrap}
+    .header .hbadge{display:inline-flex;align-items:center;gap:.25rem;background:rgba(255,255,255,.18);padding:.2rem .7rem;border-radius:20px;font-size:.72rem;backdrop-filter:blur(4px)}
+
+    /* ===== Tabs ===== */
+    .tabs{display:flex;background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
+    .tab{flex:1;text-align:center;padding:.7rem 0 .6rem;font-size:.78rem;font-weight:500;color:var(--text-2);cursor:pointer;border-bottom:2.5px solid transparent;transition:all .2s;user-select:none}
+    .tab.on{color:var(--primary);border-bottom-color:var(--primary);font-weight:600}
+    .tab .ti{font-size:1rem;display:block;margin-bottom:.1rem}
+
+    /* ===== Day Selector ===== */
+    .day-sel{display:flex;gap:.4rem;padding:.6rem .8rem;overflow-x:auto;background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:49px;z-index:90;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+    .day-sel::-webkit-scrollbar{display:none}
+    .dp{flex-shrink:0;padding:.3rem .65rem;border-radius:18px;font-size:.72rem;cursor:pointer;background:var(--bg);color:var(--text-2);border:1px solid var(--border);transition:all .2s;text-align:center;min-width:44px;user-select:none;line-height:1.4}
+    .dp.on{background:var(--primary);color:#fff;border-color:var(--primary);font-weight:600}
+    .dp .dd{font-weight:500;font-size:.73rem}
+    .dp .dw{font-size:.62rem;opacity:.7}
+
+    /* ===== Content ===== */
+    .ct{padding:1rem;max-width:640px;margin:0 auto;padding-bottom:3rem}
+
+    /* ===== Day Header ===== */
+    .dh h2{font-size:1.2rem;font-weight:700;margin-bottom:.15rem;line-height:1.3}
+    .dh .ddate{font-size:.8rem;color:var(--text-2);margin-bottom:.75rem}
+
+    /* ===== Stats ===== */
+    .stats{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.75rem}
+    .st{display:inline-flex;align-items:center;gap:.25rem;padding:.25rem .55rem;background:var(--primary-light);color:var(--primary-dark);border-radius:5px;font-size:.72rem;font-weight:500}
+
+    /* ===== Drive Note ===== */
+    .dnote{background:#fef9ef;border-left:3px solid var(--accent);padding:.45rem .7rem;margin-bottom:.85rem;font-size:.78rem;border-radius:0 6px 6px 0;color:#7a6540}
+
+    /* ===== Map Section ===== */
+    .map-sec{margin-bottom:.85rem;border-radius:var(--r-sm);overflow:hidden;background:var(--surface);box-shadow:var(--shadow)}
+    .map-tog{display:flex;align-items:center;gap:.4rem;padding:.6rem .75rem;font-size:.82rem;color:var(--primary);cursor:pointer;font-weight:500;user-select:none}
+    .map-tog svg{transition:transform .3s;flex-shrink:0}
+    .map-sec.open .map-tog svg{transform:rotate(180deg)}
+    .map-fr{height:0;overflow:hidden;transition:height .35s ease}
+    .map-sec.open .map-fr{height:280px}
+    .map-fr iframe{width:100%;height:280px;border:0;border-top:1px solid var(--border)}
+    .map-open-btn{display:inline-flex;align-items:center;gap:.25rem;margin-left:auto;padding:.15rem .5rem;background:var(--primary-light);border-radius:4px;font-size:.7rem;color:var(--primary);text-decoration:none;flex-shrink:0}
+
+    /* ===== Timeline ===== */
+    .tl{position:relative;padding-left:1.6rem;margin-bottom:1rem}
+    .tl::before{content:'';position:absolute;left:5px;top:8px;bottom:8px;width:2px;background:var(--border);border-radius:1px}
+
+    /* ===== Activity Card ===== */
+    .ac{position:relative;background:var(--surface);border-radius:var(--r-sm);box-shadow:var(--shadow);margin-bottom:.6rem;overflow:hidden}
+    .ac::before{content:'';position:absolute;left:-1.6rem;top:.85rem;width:10px;height:10px;border-radius:50%;border:2px solid var(--surface);z-index:1;transform:translateX(-1px)}
+    .ac[data-t="景點"]::before{background:var(--type-景點)}
+    .ac[data-t="吃喝"]::before{background:var(--type-吃喝)}
+    .ac[data-t="移動"]::before{background:var(--type-移動)}
+    .ac[data-t="作業"]::before{background:var(--type-作業)}
+    .ac[data-t="住宿"]::before{background:var(--type-住宿)}
+
+    .ah{display:flex;align-items:center;padding:.65rem .7rem;cursor:pointer;gap:.45rem;-webkit-tap-highlight-color:transparent}
+    .an{flex:1;font-size:.88rem;font-weight:500;line-height:1.35}
+    .at{font-size:.7rem;color:var(--text-3);flex-shrink:0;white-space:nowrap}
+    .ab{flex-shrink:0;padding:.12rem .35rem;border-radius:3px;font-size:.6rem;font-weight:700;letter-spacing:.02em;text-transform:uppercase}
+    .ab-景點{background:var(--type-景點-bg);color:var(--type-景點)}
+    .ab-吃喝{background:var(--type-吃喝-bg);color:var(--type-吃喝)}
+    .ab-移動{background:var(--type-移動-bg);color:var(--type-移動)}
+    .ab-作業{background:var(--type-作業-bg);color:var(--type-作業)}
+    .ab-住宿{background:var(--type-住宿-bg);color:var(--type-住宿)}
+    .chev{flex-shrink:0;width:18px;height:18px;transition:transform .3s;color:var(--text-3)}
+    .ac.ex .chev{transform:rotate(180deg)}
+
+    /* Details */
+    .ad{max-height:0;overflow:hidden;transition:max-height .3s ease-out}
+    .ac.ex .ad{max-height:500px;transition:max-height .4s ease-in}
+    .adi{padding:0 .7rem .7rem;border-top:1px solid var(--border)}
+    .dr{display:flex;align-items:flex-start;gap:.4rem;margin-top:.45rem;font-size:.78rem;color:var(--text-2)}
+    .dl{font-weight:600;color:var(--text);min-width:40px;flex-shrink:0;font-size:.75rem}
+    .dv{flex:1}
+    .ftags{display:flex;gap:.3rem;flex-wrap:wrap;margin-top:.3rem}
+    .ftag{display:inline-flex;align-items:center;gap:.15rem;padding:.1rem .35rem;background:#f0f1f0;border-radius:3px;font-size:.68rem}
+    .nwarn{background:#fef9ef;border-left:2px solid var(--accent);padding:.3rem .5rem;margin-top:.4rem;border-radius:0 4px 4px 0;font-size:.75rem;color:#7a6540}
+    .ntodo{background:#fff4e5;border-left:2px solid #f59e0b;padding:.3rem .5rem;margin-top:.4rem;border-radius:0 4px 4px 0;font-size:.75rem;color:#92600a}
+    .mlink{display:inline-flex;align-items:center;gap:.25rem;padding:.2rem .5rem;background:var(--primary-light);color:var(--primary);border-radius:4px;font-size:.72rem;margin-top:.4rem;transition:background .2s}
+    .mlink:hover{background:#d4ebe5}
+
+    /* ===== Accommodation ===== */
+    .acard{background:var(--surface);border-radius:var(--r-sm);box-shadow:var(--shadow);padding:.7rem;display:flex;align-items:flex-start;gap:.6rem;margin-top:.6rem}
+    .acard .ai{font-size:1.4rem;flex-shrink:0}
+    .acard h3{font-size:.88rem;font-weight:500;margin-bottom:.1rem;line-height:1.3}
+    .acard p{font-size:.78rem;color:var(--text-2)}
+    .aprice{color:var(--accent);font-weight:600}
+
+    /* ===== Cancelled ===== */
+    .cxs{margin-top:.6rem}
+    .cxt{display:flex;align-items:center;gap:.4rem;padding:.4rem 0;cursor:pointer;font-size:.78rem;color:var(--text-3);user-select:none}
+    .cxt svg{transition:transform .3s}
+    .cxs.open .cxt svg{transform:rotate(180deg)}
+    .cxi{display:none}
+    .cxs.open .cxi{display:block}
+    .cxc{background:#f5f5f5;border-radius:var(--r-sm);padding:.45rem .65rem;margin-bottom:.4rem;opacity:.55}
+    .cxc .an{text-decoration:line-through;color:var(--text-3);font-size:.82rem}
+    .cxc .cn{font-size:.7rem;color:var(--text-3);margin-top:.15rem}
+
+    /* ===== Flights ===== */
+    .fc{background:var(--surface);border-radius:var(--r);box-shadow:var(--shadow);margin-bottom:1rem;overflow:hidden}
+    .fch{background:var(--primary-light);padding:.65rem .85rem;font-weight:600;color:var(--primary-dark);font-size:.9rem}
+    .fdir{padding:.4rem .85rem;font-size:.75rem;color:var(--text-2);border-bottom:1px solid var(--border);font-weight:500;background:#fafafa}
+    .fl{display:flex;align-items:center;padding:.55rem .85rem;border-bottom:1px solid var(--border);gap:.6rem}
+    .fl:last-child{border-bottom:none}
+    .fe{font-size:1.1rem;flex-shrink:0}
+    .fi{flex:1}
+    .fr{font-size:.82rem;font-weight:500}
+    .fd{font-size:.72rem;color:var(--text-2)}
+    .ftr{font-size:.72rem;color:var(--accent);padding:.35rem .85rem;background:var(--accent-light)}
+    .fcost{padding:.65rem .85rem;background:var(--accent-light);font-size:.82rem;color:#8a6840;font-weight:500}
+
+    /* ===== Checklist ===== */
+    .clprog{background:var(--border);border-radius:10px;height:6px;margin-bottom:1rem;overflow:hidden}
+    .clbar{background:var(--primary);height:100%;border-radius:10px;transition:width .3s}
+    .cli{display:flex;align-items:center;gap:.65rem;padding:.55rem .7rem;background:var(--surface);border-radius:var(--r-sm);margin-bottom:.4rem;box-shadow:var(--shadow);cursor:pointer;transition:opacity .2s;user-select:none}
+    .cli.ck{opacity:.45}
+    .cli.ck .cltx{text-decoration:line-through}
+    .clcb{width:20px;height:20px;border:2px solid var(--border);border-radius:5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;font-size:.7rem;color:transparent}
+    .cli.ck .clcb{background:var(--primary);border-color:var(--primary);color:#fff}
+    .cltx{font-size:.85rem}
+
+    /* ===== Tips ===== */
+    .tc{background:var(--surface);border-radius:var(--r-sm);box-shadow:var(--shadow);padding:.85rem;margin-bottom:.65rem}
+    .tc h3{font-size:.9rem;font-weight:600;margin-bottom:.4rem;display:flex;align-items:center;gap:.4rem}
+    .tc ul{padding-left:1.1rem;font-size:.82rem;color:var(--text-2)}
+    .tc li{margin-bottom:.3rem}
+    .tc .tv{font-size:.82rem;color:var(--text-2)}
+    .twarn{background:#fef0f0;border-left:3px solid #e74c3c;padding:.45rem .65rem;border-radius:0 6px 6px 0;margin-top:.4rem;font-size:.78rem;color:#7a2020}
+
+    /* ===== Section Title ===== */
+    .stitle{font-size:1.15rem;font-weight:700;margin-bottom:.85rem;display:flex;align-items:center;gap:.4rem}
+
+    /* ===== Footer ===== */
+    .footer{text-align:center;padding:1.5rem;font-size:.72rem;color:var(--text-3)}
+
+    /* ===== Responsive ===== */
+    @media(min-width:768px){
+      .ct{padding:1.5rem}
+      .header{padding:3rem 2rem 2.2rem}
+      .header h1{font-size:1.6rem}
+    }
+
+    /* ===== Animation ===== */
+    @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+    .ct{animation:fadeIn .3s ease-out}
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div style="padding:3rem;text-align:center;color:var(--text-2)">載入中...</div>
+  </div>
+
+  <script src="data.js"></script>
+  <script>
+  (function(){
+    // ===== State =====
+    const S = {
+      tab: 'itin',
+      day: getAutoDay(),
+      exp: new Set(),
+      cl: loadCL()
+    };
+
+    function getAutoDay(){
+      const d = Math.floor((new Date()-new Date('2026-02-13'))/864e5);
+      return d>=0&&d<=18?d:1;
+    }
+    function loadCL(){try{return JSON.parse(localStorage.getItem('nz26cl')||'{}')}catch(e){return{}}}
+    function saveCL(){localStorage.setItem('nz26cl',JSON.stringify(S.cl))}
+
+    const FICON = {'停車場':'🅿️','廁所':'🚻','路邊停車':'🚗','付費廁所':'💰'};
+    const GMAP_URL = 'https://www.google.com/maps/d/u/0/viewer?mid=1I-Tn1fN0KJmqLi_xYKibtde2L8Gn2lo';
+
+    // ===== Render =====
+    function render(){
+      const app = document.getElementById('app');
+      app.innerHTML = renderHeader() + renderTabs() + '<div id="ct">' + renderContent() + '</div>';
+      if(S.tab==='itin') raf(scrollDay);
+    }
+
+    function renderHeader(){
+      return `<div class="header">
+        <h1>🇳🇿 紐西蘭南島 2026</h1>
+        <div class="sub">${DATA.duration}</div>
+        <div class="badges">
+          <span class="hbadge">🧭 ${DATA.tripType}路線</span>
+          <span class="hbadge">🚐 露營車自駕</span>
+          <span class="hbadge">👥 6人</span>
+        </div>
+      </div>`;
+    }
+
+    function renderTabs(){
+      const tabs = [
+        {k:'itin',i:'🗓',l:'行程'},
+        {k:'flights',i:'✈️',l:'航班'},
+        {k:'check',i:'✅',l:'待辦'},
+        {k:'tips',i:'📋',l:'須知'}
+      ];
+      return `<div class="tabs">${tabs.map(t=>
+        `<div class="tab${S.tab===t.k?' on':''}" data-a="tab" data-v="${t.k}">
+          <span class="ti">${t.i}</span>${t.l}
+        </div>`
+      ).join('')}</div>`;
+    }
+
+    function renderContent(){
+      switch(S.tab){
+        case 'itin': return renderItin();
+        case 'flights': return renderFlights();
+        case 'check': return renderCheck();
+        case 'tips': return renderTips();
+      }
+    }
+
+    // ===== Itinerary =====
+    function renderItin(){
+      return renderDaySel() + '<div class="ct" id="dv">' + renderDayView() + '</div>';
+    }
+
+    function renderDaySel(){
+      return `<div class="day-sel" id="ds">${DATA.days.map(d=>{
+        const isF = d.day<=1||d.day>=17;
+        return `<div class="dp${S.day===d.day?' on':''}" data-a="day" data-v="${d.day}">
+          <div class="dd">${isF?'✈️ ':''}${d.date}</div>
+          <div class="dw">${d.weekday}</div>
+        </div>`;
+      }).join('')}</div>`;
+    }
+
+    function renderDayView(){
+      const d = DATA.days[S.day];
+      if(!d) return '';
+      const active = d.activities.filter(a=>!a.cancelled);
+      const cxd = d.activities.filter(a=>a.cancelled);
+      const hasStats = d.km>0||(d.driveTime&&d.driveTime!=='0');
+
+      return `<div class="dh">
+        <h2>${d.title}</h2>
+        <div class="ddate">${d.date} (${d.weekday}) · 第 ${d.day} 天</div>
+      </div>
+      ${hasStats?`<div class="stats">
+        ${d.km>0?`<span class="st">🚗 ${d.km} km</span>`:''}
+        ${d.driveTime&&d.driveTime!=='0'?`<span class="st">⏱ ${d.driveTime}</span>`:''}
+        ${d.route?`<span class="st">📍 ${d.route}</span>`:''}
+      </div>`:''}
+      ${d.driveNotes?`<div class="dnote">📌 ${esc(d.driveNotes)}</div>`:''}
+      <div class="map-sec" id="mapsec">
+        <div class="map-tog" data-a="maptog">
+          🗺️ 顯示路線地圖
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+          <a class="map-open-btn" href="${GMAP_URL}" target="_blank" rel="noopener" onclick="event.stopPropagation()">開啟完整地圖 ↗</a>
+        </div>
+        <div class="map-fr">
+          <iframe src="https://www.google.com/maps/d/embed?mid=1I-Tn1fN0KJmqLi_xYKibtde2L8Gn2lo" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+      </div>
+      <div class="tl">
+        ${active.map((a,i)=>renderAC(a,S.day+'-'+i)).join('')}
+      </div>
+      ${cxd.length?renderCX(cxd):''}
+      ${d.accommodation?renderAccom(d.accommodation):''}`;
+    }
+
+    function renderAC(a,key){
+      const isEx = S.exp.has(key);
+      const hasDetail = a.description||a.hours||(a.facilities&&a.facilities.length)||a.notes||a.mapLink;
+      return `<div class="ac${isEx?' ex':''}" data-t="${a.type}" data-k="${key}">
+        <div class="ah"${hasDetail?' data-a="tog" data-v="'+key+'"':''}>
+          <span class="ab ab-${a.type}">${a.type}</span>
+          <span class="an">${esc(a.name)}</span>
+          ${a.time?`<span class="at">${esc(a.time)}</span>`:''}
+          ${hasDetail?`<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>`:''}
+        </div>
+        ${hasDetail?`<div class="ad"><div class="adi">
+          ${a.description?`<div class="dr"><span class="dl">說明</span><span class="dv">${esc(a.description)}</span></div>`:''}
+          ${a.hours?`<div class="dr"><span class="dl">營業</span><span class="dv">${esc(a.hours)}</span></div>`:''}
+          ${a.facilities&&a.facilities.length?`<div class="dr"><span class="dl">設施</span><div class="ftags">${a.facilities.map(f=>`<span class="ftag">${FICON[f]||'📍'} ${esc(f)}</span>`).join('')}</div></div>`:''}
+          ${a.notes?(a.notes.includes('TODO')?`<div class="ntodo">📌 ${esc(a.notes)}</div>`:`<div class="nwarn">${esc(a.notes)}</div>`):''}
+          ${a.type!=='移動'?`<a class="mlink" href="${getMapUrl(a)}" target="_blank" rel="noopener">📍 Google Maps</a>`:''}
+        </div></div>`:''}
+      </div>`;
+    }
+
+    function renderCX(items){
+      return `<div class="cxs" id="cxs">
+        <div class="cxt" data-a="cxtog">
+          ⊘ 已排除景點 (${items.length})
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="cxi">${items.map(a=>`<div class="cxc">
+          <div class="an">${esc(a.name)}</div>
+          ${a.notes?`<div class="cn">${esc(a.notes)}</div>`:''}
+        </div>`).join('')}</div>
+      </div>`;
+    }
+
+    function renderAccom(acc){
+      if(!acc.name) return '';
+      return `<div class="acard">
+        <div class="ai">🏠</div>
+        <div style="flex:1">
+          <h3>${esc(acc.name)}</h3>
+          ${acc.price?`<p class="aprice">${esc(acc.price)}</p>`:''}
+          ${acc.notes?`<p>${esc(acc.notes)}</p>`:''}
+        </div>
+      </div>`;
+    }
+
+    // ===== Flights =====
+    function renderFlights(){
+      return `<div class="ct">
+        <div class="stitle">✈️ 航班資訊</div>
+        ${renderFRoute('高雄 KHH 出發',DATA.flights.kaohsiung)}
+        ${renderFRoute('桃園 TPE 出發',DATA.flights.taipei)}
+      </div>`;
+    }
+
+    function renderFRoute(label,route){
+      return `<div class="fc">
+        <div class="fch">${label}</div>
+        <div class="fdir">去程</div>
+        ${route.outbound.map(renderFLeg).join('')}
+        <div class="fdir">回程</div>
+        ${route.inbound.map(renderFLeg).join('')}
+        ${route.totalCost?`<div class="fcost">💰 ${route.totalCost}</div>`:''}
+      </div>`;
+    }
+
+    function renderFLeg(leg){
+      return `${leg.transit?`<div class="ftr">⏳ 轉機等候 ${leg.transit}</div>`:''}
+      <div class="fl">
+        <div class="fe">✈️</div>
+        <div class="fi">
+          <div class="fr">${esc(leg.from)} → ${esc(leg.to)}</div>
+          <div class="fd">${leg.flight} · ${leg.depart} → ${leg.arrive} · ${leg.duration}</div>
+        </div>
+      </div>`;
+    }
+
+    // ===== Checklist =====
+    function renderCheck(){
+      const total = DATA.checklist.length;
+      const done = DATA.checklist.filter((_,i)=>S.cl[i]).length;
+      const pct = Math.round(done/total*100);
+      return `<div class="ct">
+        <div class="stitle">✅ 待辦清單</div>
+        <p style="font-size:.82rem;color:var(--text-2);margin-bottom:.75rem">${done}/${total} 完成 (${pct}%)</p>
+        <div class="clprog"><div class="clbar" style="width:${pct}%"></div></div>
+        ${DATA.checklist.map((item,i)=>`<div class="cli${S.cl[i]?' ck':''}" data-a="ck" data-v="${i}">
+          <div class="clcb">${S.cl[i]?'✓':''}</div>
+          <span class="cltx">${esc(item.item)}</span>
+        </div>`).join('')}
+      </div>`;
+    }
+
+    // ===== Tips =====
+    function renderTips(){
+      const dt = DATA.drivingTips;
+      const tp = DATA.tips;
+      return `<div class="ct">
+        <div class="stitle">📋 行前須知</div>
+
+        <div class="tc">
+          <h3>🚗 駕駛須知</h3>
+          <div class="nwarn" style="margin-bottom:.5rem">⚠️ ${esc(dt.note)}</div>
+          <ul>
+            <li>駕駛時間：${esc(dt.drivingHours)}</li>
+            <li>速限：公路 ${dt.speedLimit.highway} / 露營車 ${dt.speedLimit.campervan} / 小鎮 ${dt.speedLimit.town}</li>
+            <li>每日目標：${esc(dt.dailyTarget)}</li>
+            <li>導航時間：Google Maps × ${esc(dt.timeMultiplier)}</li>
+            <li>露營車長：${dt.campervanLength}</li>
+          </ul>
+        </div>
+
+        <div class="tc">
+          <h3>🛣️ 重要路線提醒</h3>
+          <ul>${dt.importantRoutes.map(r=>`<li>${esc(r)}</li>`).join('')}</ul>
+        </div>
+
+        <div class="tc">
+          <h3>🚐 露營車資訊</h3>
+          <ul>
+            <li>預約編號：${tp.campervan.bookingRef}</li>
+            <li>取車 ${tp.campervan.pickupTime} / 出發 ${tp.campervan.departTime}</li>
+            <li>費用：${tp.campervan.totalCost}</li>
+            <li>車長：${tp.campervan.length}</li>
+          </ul>
+        </div>
+
+        <div class="tc">
+          <h3>🛒 超市採購</h3>
+          <div class="tv">${esc(tp.supermarket)}</div>
+        </div>
+
+        ${tp.sandfly_warning?`<div class="tc">
+          <h3>🦟 沙蚊(沙蠅)警告</h3>
+          <div class="twarn">${esc(tp.sandfly_warning)}</div>
+        </div>`:''}
+
+        <div class="tc">
+          <h3>💱 匯率參考</h3>
+          <ul>
+            <li>1 USD ≈ ${DATA.currency.usd_to_twd} TWD</li>
+            <li>1 NZD ≈ ${DATA.currency.nzd_to_twd} TWD</li>
+          </ul>
+        </div>
+
+        <div class="tc">
+          <h3>🗺️ 行程地圖</h3>
+          <div class="tv">
+            <a href="${GMAP_URL}" target="_blank" rel="noopener" class="mlink" style="margin-top:0">📍 在 Google Maps 查看完整路線</a>
+          </div>
+        </div>
+      </div>`;
+    }
+
+    // ===== Events =====
+    document.getElementById('app').addEventListener('click', function(e){
+      const t = e.target.closest('[data-a]');
+      if(!t) return;
+      const a = t.dataset.a, v = t.dataset.v;
+
+      if(a==='tab'){
+        S.tab = v;
+        S.exp.clear();
+        render();
+      }
+      if(a==='day'){
+        S.day = Number(v);
+        S.exp.clear();
+        document.querySelectorAll('.dp').forEach(p=>p.classList.toggle('on',Number(p.dataset.v)===S.day));
+        const dv = document.getElementById('dv');
+        if(dv) dv.innerHTML = renderDayView();
+        raf(()=>{
+          const dv2 = document.getElementById('dv');
+          if(dv2) dv2.scrollIntoView({behavior:'smooth',block:'start'});
+        });
+      }
+      if(a==='tog'){
+        e.preventDefault();
+        const key = v;
+        const card = t.closest('.ac');
+        if(S.exp.has(key)){S.exp.delete(key);card.classList.remove('ex')}
+        else{S.exp.add(key);card.classList.add('ex')}
+      }
+      if(a==='maptog'){
+        const sec = document.getElementById('mapsec');
+        if(sec) sec.classList.toggle('open');
+      }
+      if(a==='cxtog'){
+        const sec = t.closest('.cxs');
+        if(sec) sec.classList.toggle('open');
+      }
+      if(a==='ck'){
+        const idx = Number(v);
+        S.cl[idx] = !S.cl[idx];
+        saveCL();
+        const ct = document.getElementById('ct');
+        if(ct) ct.innerHTML = renderContent();
+      }
+    });
+
+    // ===== Utils =====
+    function getMapUrl(a){
+      if(a.mapLink) return a.mapLink;
+      const q = encodeURIComponent(a.name + ' New Zealand');
+      return 'https://www.google.com/maps/search/?api=1&query=' + q;
+    }
+    function esc(s){
+      if(!s) return '';
+      return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+    function raf(fn){requestAnimationFrame(fn)}
+    function scrollDay(){
+      const el = document.querySelector('.dp.on');
+      if(el) el.scrollIntoView({inline:'center',block:'nearest',behavior:'smooth'});
+    }
+
+    // ===== Init =====
+    if(typeof DATA==='undefined'){
+      document.getElementById('app').innerHTML='<p style="padding:3rem;text-align:center;color:var(--text-2)">⚠️ 找不到行程資料，請確認 data.js 檔案存在</p>';
+    } else {
+      render();
+    }
+  })();
+  </script>
+</body>
+</html>
