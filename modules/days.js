@@ -1413,7 +1413,7 @@ export const DAYS = [
         }
       ],
       "accommodation": {
-        "name": "Christchurch",
+        "name": "Distinction Christchurch Hotel",
         "notes": "",
         "price": ""
       },
