@@ -763,7 +763,7 @@ export const DAYS = [
       ],
       "accommodation": {
         "name": "Queenstown - Hampshire Holiday Parks",
-        "notes": "活動已優化，部分移至備案",
+        "notes": "",
         "price": "",
         "mapLink": "https://www.google.com/maps/search/?api=1&query=Queenstown+Hampshire+Holiday+Parks"
       },
