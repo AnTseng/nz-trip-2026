@@ -44,13 +44,13 @@
     .header .hbadge{display:inline-flex;align-items:center;gap:.25rem;background:rgba(255,255,255,.18);padding:.2rem .7rem;border-radius:20px;font-size:.72rem;backdrop-filter:blur(4px)}
 
     /* ===== Tabs ===== */
-    .tabs{display:flex;background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
-    .tab{flex:1;text-align:center;padding:.7rem 0 .6rem;font-size:.78rem;font-weight:500;color:var(--text-2);cursor:pointer;border-bottom:2.5px solid transparent;transition:all .2s;user-select:none}
+    .tabs{display:flex;background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:999;box-shadow:0 2px 4px rgba(0,0,0,0.05)}
+    .tab{flex:1;text-align:center;padding:.5rem 0 .45rem;font-size:.75rem;font-weight:500;color:var(--text-2);cursor:pointer;border-bottom:2.5px solid transparent;transition:all .2s;user-select:none}
     .tab.on{color:var(--primary);border-bottom-color:var(--primary);font-weight:600}
-    .tab .ti{font-size:1rem;display:block;margin-bottom:.1rem}
+    .tab .ti{font-size:.9rem;display:block;margin-bottom:.08rem}
 
     /* ===== Day Selector ===== */
-    .day-sel{display:flex;gap:.4rem;padding:.6rem .8rem;overflow-x:auto;background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:49px;z-index:90;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+    .day-sel{display:flex;gap:.4rem;padding:.6rem .8rem;overflow-x:auto;background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:62px;z-index:998;-webkit-overflow-scrolling:touch;scrollbar-width:none}
     .day-sel::-webkit-scrollbar{display:none}
     .dp{flex-shrink:0;padding:.3rem .65rem;border-radius:18px;font-size:.72rem;cursor:pointer;background:var(--bg);color:var(--text-2);border:1px solid var(--border);transition:all .2s;text-align:center;min-width:44px;user-select:none;line-height:1.4}
     .dp.on{background:var(--primary);color:#fff;border-color:var(--primary);font-weight:600}
@@ -276,8 +276,16 @@
     function saveNT(){localStorage.setItem('nz26nt',JSON.stringify(S.nt))}
 
     const FICON = {'停車場':'🅿️','廁所':'🚻','路邊停車':'🚗','付費廁所':'💰'};
-    const TICON = {'移動':'✈️','景點':'📍','吃喝':'🍽️','住宿':'🏠','作業':'📋'};
+    const TICON = {'景點':'📍','吃喝':'🍽️','住宿':'🏠','作業':'📋'};
     const GMAP_URL = 'https://www.google.com/maps/d/u/0/viewer?mid=1I-Tn1fN0KJmqLi_xYKibtde2L8Gn2lo';
+
+    // 判斷移動類型（飛機或開車）
+    function getMoveIcon(activity, day) {
+      if (activity.type !== '移動') return null;
+      // 前兩天（Day 0-1）和後兩天（Day 17-18）強制顯示飛機
+      if (day !== undefined && (day <= 1 || day >= 17)) return '✈️';
+      return '🚗';
+    }
 
     // ===== Render =====
     function render(){
@@ -330,11 +338,10 @@
 
     function renderDaySel(){
       return `<div class="day-sel" id="ds">${DATA.days.map(d=>{
-        const isF = d.day<=1||d.day>=17;
+        const icon = (d.day<=1||d.day===18) ? '✈️ ' : '';
         return `<div class="dp${S.day===d.day?' on':''}" data-a="day" data-v="${d.day}">
-          <div class="dd">${isF?'✈️ ':''}${d.date}</div>
-          <div class="dw">${d.weekday}</div>
-          <div class="dn">D${d.day}</div>
+          <div class="dd">${icon}${d.date}</div>
+          <div class="dw">D${d.day} (${d.weekday})</div>
         </div>`;
       }).join('')}</div>`;
     }
@@ -380,7 +387,7 @@
         </div>
       </div>
       <div class="tl">
-        ${active.map(item=>renderAC(item.a,S.day+'-'+item.idx)).join('')}
+        ${active.map(item=>renderAC(item.a,S.day+'-'+item.idx,S.day)).join('')}
       </div>
       ${cxd.length?renderCX(cxd):''}
       ${d.accommodation?renderAccom(d.accommodation,S.day):''}
@@ -390,7 +397,7 @@
       </div>`;
     }
 
-    function renderAC(a,key){
+    function renderAC(a,key,day){
       const isEx = S.exp.has(key);
       const sch = DATA.schedules&&DATA.schedules[key];
       const schTime = sch&&sch.s;
@@ -402,7 +409,10 @@
         ${drv?`<div class="ah-drive">${drv.includes('步行')?'🚶':drv.includes('計程車')?'🚕':'🚗'} ${esc(drv)}</div>`:''}
         <div class="ah" data-a="tog" data-v="${key}">
           <div class="ah-top">
-            ${a.type.split('+').map(t=>`<span class="ab ab-${t}">${TICON[t]||'📌'} ${t}</span>`).join('')}
+            ${a.type.split('+').map(t=>{
+              const icon = t === '移動' ? getMoveIcon(a, day) : (TICON[t] || '📌');
+              return `<span class="ab ab-${t}">${icon} ${t}</span>`;
+            }).join('')}
             <span class="an">${esc(a.name)}</span>
             ${noteVal?'<span class="nt-dot"></span>':''}
             <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
@@ -669,7 +679,11 @@
         if(dv) dv.innerHTML = renderDayView();
         raf(()=>{
           const dv2 = document.getElementById('dv');
-          if(dv2) dv2.scrollIntoView({behavior:'smooth',block:'start'});
+          if(dv2){
+            const rect = dv2.getBoundingClientRect();
+            const offset = 110; // tabs + day-sel 高度
+            window.scrollTo({top:window.pageYOffset + rect.top - offset, behavior:'smooth'});
+          }
         });
       }
       if(a==='tog'){
