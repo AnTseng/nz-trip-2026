@@ -687,7 +687,8 @@ export const DAYS = [
       "accommodation": {
         "name": "Queenstown - Hampshire Holiday Parks",
         "notes": "",
-        "price": ""
+        "price": "",
+        "mapLink": "https://www.google.com/maps/search/?api=1&query=Queenstown+Hampshire+Holiday+Parks"
       },
       "driveNotes": "從 Manapouri 返回皇后鎮 (駕駛時間已乘以 1.5 倍考量)"
     },
@@ -761,9 +762,10 @@ export const DAYS = [
         }
       ],
       "accommodation": {
-        "name": "Queenstown",
+        "name": "Queenstown - Hampshire Holiday Parks",
         "notes": "活動已優化，部分移至備案",
-        "price": ""
+        "price": "",
+        "mapLink": "https://www.google.com/maps/search/?api=1&query=Queenstown+Hampshire+Holiday+Parks"
       },
       "driveNotes": ""
     },
@@ -856,9 +858,10 @@ export const DAYS = [
         }
       ],
       "accommodation": {
-        "name": "Queenstown - Driftaway Queenstown",
+        "name": "Queenstown - Hampshire Holiday Parks",
         "notes": "",
-        "price": ""
+        "price": "",
+        "mapLink": "https://www.google.com/maps/search/?api=1&query=Queenstown+Hampshire+Holiday+Parks"
       },
       "driveNotes": "皇后鎮 → 格萊諾基 (駕駛時間已乘以 1.5 倍考量)"
     },
