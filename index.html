@@ -94,9 +94,12 @@
     .ac[data-t="作業"]::before{background:var(--type-作業)}
     .ac[data-t="住宿"]::before{background:var(--type-住宿)}
 
-    .ah{display:flex;align-items:center;padding:.65rem .7rem;cursor:pointer;gap:.45rem;-webkit-tap-highlight-color:transparent}
-    .an{flex:1;font-size:.88rem;font-weight:500;line-height:1.35}
-    .at{font-size:.7rem;color:var(--text-3);flex-shrink:0;white-space:nowrap}
+    .ah{display:flex;flex-wrap:wrap;align-items:center;padding:.55rem .7rem .45rem;cursor:pointer;gap:.3rem .45rem;-webkit-tap-highlight-color:transparent}
+    .ah-top{display:flex;align-items:center;gap:.45rem;width:100%;min-width:0}
+    .an{flex:1;font-size:.88rem;font-weight:500;line-height:1.35;min-width:0;overflow:hidden;text-overflow:ellipsis}
+    .ah-sub{display:flex;align-items:center;gap:.6rem;width:100%;padding-left:calc(.35rem + .7rem + .45rem);font-size:.72rem;color:var(--text-3);line-height:1.3}
+    .ah-sub span{display:inline-flex;align-items:center;gap:.2rem;white-space:nowrap}
+    .ah-drive{display:flex;align-items:center;gap:.3rem;padding:.2rem .7rem 0;font-size:.68rem;color:var(--type-移動);opacity:.8}
     .ab{flex-shrink:0;padding:.12rem .35rem;border-radius:3px;font-size:.6rem;font-weight:700;letter-spacing:.02em;text-transform:uppercase}
     .ab-景點{background:var(--type-景點-bg);color:var(--type-景點)}
     .ab-吃喝{background:var(--type-吃喝-bg);color:var(--type-吃喝)}
@@ -121,11 +124,17 @@
     .mlink:hover{background:#d4ebe5}
 
     /* ===== Accommodation ===== */
-    .acard{background:var(--surface);border-radius:var(--r-sm);box-shadow:var(--shadow);padding:.7rem;display:flex;align-items:flex-start;gap:.6rem;margin-top:.6rem}
-    .acard .ai{font-size:1.4rem;flex-shrink:0}
-    .acard h3{font-size:.88rem;font-weight:500;margin-bottom:.1rem;line-height:1.3}
-    .acard p{font-size:.78rem;color:var(--text-2)}
-    .aprice{color:var(--accent);font-weight:600}
+    .acard{background:var(--surface);border-radius:var(--r-sm);box-shadow:var(--shadow);margin-top:.6rem;margin-bottom:.85rem;overflow:hidden}
+    .acard-h{display:flex;align-items:center;gap:.5rem;padding:.6rem .7rem;cursor:pointer;-webkit-tap-highlight-color:transparent}
+    .acard-h .ai{font-size:1.2rem;flex-shrink:0}
+    .acard-h h3{flex:1;font-size:.88rem;font-weight:500;line-height:1.3}
+    .acard .chev{flex-shrink:0;width:18px;height:18px;transition:transform .3s;color:var(--text-3)}
+    .acard.ex .chev{transform:rotate(180deg)}
+    .acard-d{max-height:0;overflow:hidden;transition:max-height .3s ease-out}
+    .acard.ex .acard-d{max-height:400px;transition:max-height .4s ease-in}
+    .acard-di{padding:0 .7rem .7rem;border-top:1px solid var(--border)}
+    .aprice{color:var(--accent);font-weight:600;font-size:.82rem}
+    .acard-di p{font-size:.78rem;color:var(--text-2);margin-top:.3rem}
 
     /* ===== Cancelled ===== */
     .cxs{margin-top:.6rem}
@@ -151,15 +160,37 @@
     .ftr{font-size:.72rem;color:var(--accent);padding:.35rem .85rem;background:var(--accent-light)}
     .fcost{padding:.65rem .85rem;background:var(--accent-light);font-size:.82rem;color:#8a6840;font-weight:500}
 
-    /* ===== Checklist ===== */
+    /* ===== Packing List ===== */
     .clprog{background:var(--border);border-radius:10px;height:6px;margin-bottom:1rem;overflow:hidden}
     .clbar{background:var(--primary);height:100%;border-radius:10px;transition:width .3s}
-    .cli{display:flex;align-items:center;gap:.65rem;padding:.55rem .7rem;background:var(--surface);border-radius:var(--r-sm);margin-bottom:.4rem;box-shadow:var(--shadow);cursor:pointer;transition:opacity .2s;user-select:none}
+    .plcat{margin-bottom:.7rem;background:var(--surface);border-radius:var(--r-sm);box-shadow:var(--shadow);overflow:hidden}
+    .plch{display:flex;align-items:center;gap:.4rem;padding:.55rem .7rem;cursor:pointer;user-select:none;border-bottom:1px solid var(--border)}
+    .plcat.closed .plch{border-bottom:none}
+    .plci{font-size:1rem;flex-shrink:0}
+    .plcn{flex:1;font-size:.85rem;font-weight:600}
+    .plcc{font-size:.68rem;color:var(--text-3);padding:.1rem .4rem;background:var(--bg);border-radius:10px}
+    .plcat .chev{flex-shrink:0;width:16px;height:16px;transition:transform .3s;color:var(--text-3)}
+    .plcat.closed .chev{transform:rotate(-90deg)}
+    .plcat.closed .plcl{display:none}
+    .pltag{font-size:.58rem;padding:.08rem .3rem;border-radius:3px;background:#e8d5f5;color:#7b4ea0;font-weight:500;flex-shrink:0}
+    .cli{display:flex;align-items:center;gap:.65rem;padding:.5rem .7rem;cursor:pointer;transition:opacity .2s;user-select:none;border-bottom:1px solid var(--border)}
+    .cli:last-child{border-bottom:none}
     .cli.ck{opacity:.45}
     .cli.ck .cltx{text-decoration:line-through}
-    .clcb{width:20px;height:20px;border:2px solid var(--border);border-radius:5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;font-size:.7rem;color:transparent}
+    .clcb{width:18px;height:18px;border:2px solid var(--border);border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;font-size:.65rem;color:transparent}
     .cli.ck .clcb{background:var(--primary);border-color:var(--primary);color:#fff}
-    .cltx{font-size:.85rem}
+    .cltx{font-size:.82rem;flex:1}
+
+    /* ===== Notes ===== */
+    .nt-day{background:var(--surface);border-radius:var(--r-sm);box-shadow:var(--shadow);padding:.6rem .7rem;margin-bottom:.85rem}
+    .nt-lbl{font-size:.78rem;font-weight:500;color:var(--text-2);margin-bottom:.3rem;display:flex;align-items:center;gap:.3rem}
+    .nt-input{width:100%;border:1px solid var(--border);border-radius:6px;padding:.4rem .55rem;font-size:.78rem;font-family:var(--font);resize:vertical;min-height:2.4rem;background:var(--surface);color:var(--text);line-height:1.5}
+    .nt-input:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 2px rgba(42,124,111,.15)}
+    .nt-input::placeholder{color:var(--text-3)}
+    .nt-card{margin-top:.45rem;padding-top:.35rem;border-top:1px dashed var(--border)}
+    .adi>.nt-card:first-child{border-top:none;margin-top:0;padding-top:.1rem}
+    .nt-card .nt-input{min-height:2rem;font-size:.75rem}
+    .nt-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0;margin-left:-.2rem}
 
     /* ===== Tips ===== */
     .tc{background:var(--surface);border-radius:var(--r-sm);box-shadow:var(--shadow);padding:.85rem;margin-bottom:.65rem}
@@ -200,15 +231,19 @@
       tab: 'itin',
       day: getAutoDay(),
       exp: new Set(),
-      cl: loadCL()
+      cl: loadCL(),
+      cc: new Set(),
+      nt: loadNT()
     };
 
     function getAutoDay(){
       const d = Math.floor((new Date()-new Date('2026-02-13'))/864e5);
       return d>=0&&d<=18?d:1;
     }
-    function loadCL(){try{return JSON.parse(localStorage.getItem('nz26cl')||'{}')}catch(e){return{}}}
-    function saveCL(){localStorage.setItem('nz26cl',JSON.stringify(S.cl))}
+    function loadCL(){try{return JSON.parse(localStorage.getItem('nz26pk')||'{}')}catch(e){return{}}}
+    function saveCL(){localStorage.setItem('nz26pk',JSON.stringify(S.cl))}
+    function loadNT(){try{return JSON.parse(localStorage.getItem('nz26nt')||'{}')}catch(e){return{}}}
+    function saveNT(){localStorage.setItem('nz26nt',JSON.stringify(S.nt))}
 
     const FICON = {'停車場':'🅿️','廁所':'🚻','路邊停車':'🚗','付費廁所':'💰'};
     const GMAP_URL = 'https://www.google.com/maps/d/u/0/viewer?mid=1I-Tn1fN0KJmqLi_xYKibtde2L8Gn2lo';
@@ -227,7 +262,7 @@
         <div class="badges">
           <span class="hbadge">🧭 ${DATA.tripType}路線</span>
           <span class="hbadge">🚐 露營車自駕</span>
-          <span class="hbadge">👥 6人</span>
+          <span class="hbadge">👥 4人</span>
         </div>
       </div>`;
     }
@@ -236,7 +271,7 @@
       const tabs = [
         {k:'itin',i:'🗓',l:'行程'},
         {k:'flights',i:'✈️',l:'航班'},
-        {k:'check',i:'✅',l:'待辦'},
+        {k:'check',i:'🧳',l:'行李'},
         {k:'tips',i:'📋',l:'須知'}
       ];
       return `<div class="tabs">${tabs.map(t=>
@@ -273,7 +308,8 @@
     function renderDayView(){
       const d = DATA.days[S.day];
       if(!d) return '';
-      const active = d.activities.filter(a=>!a.cancelled);
+      const active = [];
+      d.activities.forEach((a,i)=>{if(!a.cancelled) active.push({a:a,idx:i})});
       const cxd = d.activities.filter(a=>a.cancelled);
       const hasStats = d.km>0||(d.driveTime&&d.driveTime!=='0');
 
@@ -298,29 +334,48 @@
         </div>
       </div>
       <div class="tl">
-        ${active.map((a,i)=>renderAC(a,S.day+'-'+i)).join('')}
+        ${active.map(item=>renderAC(item.a,S.day+'-'+item.idx)).join('')}
       </div>
       ${cxd.length?renderCX(cxd):''}
-      ${d.accommodation?renderAccom(d.accommodation):''}`;
+      ${d.accommodation?renderAccom(d.accommodation,S.day):''}
+      <div class="nt-day">
+        <div class="nt-lbl">📝 今日備註</div>
+        <textarea class="nt-input" data-nk="d${d.day}" placeholder="記錄今天的想法...">${esc(S.nt['d'+d.day]||'')}</textarea>
+      </div>`;
     }
 
     function renderAC(a,key){
       const isEx = S.exp.has(key);
-      const hasDetail = a.description||a.hours||(a.facilities&&a.facilities.length)||a.notes||a.mapLink;
+      const sch = DATA.schedules&&DATA.schedules[key];
+      const schTime = sch&&sch.s;
+      const drv = sch&&sch.d;
+      const isRange = schTime&&/^\d{2}:\d{2}-\d{2}:\d{2}/.test(schTime);
+      const hasSub = schTime||a.time||drv;
+      const noteVal = S.nt[key]||'';
       return `<div class="ac${isEx?' ex':''}" data-t="${a.type}" data-k="${key}">
-        <div class="ah"${hasDetail?' data-a="tog" data-v="'+key+'"':''}>
-          <span class="ab ab-${a.type}">${a.type}</span>
-          <span class="an">${esc(a.name)}</span>
-          ${a.time?`<span class="at">${esc(a.time)}</span>`:''}
-          ${hasDetail?`<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>`:''}
+        ${drv?`<div class="ah-drive">🚗 ${esc(drv)}</div>`:''}
+        <div class="ah" data-a="tog" data-v="${key}">
+          <div class="ah-top">
+            <span class="ab ab-${a.type}">${a.type}</span>
+            <span class="an">${esc(a.name)}</span>
+            ${noteVal?'<span class="nt-dot"></span>':''}
+            <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          ${hasSub?`<div class="ah-sub">
+            ${schTime?`<span>📍 ${esc(schTime)}${isRange&&a.time?' ('+esc(a.time)+')':''}</span>`:(a.time?`<span>⏱ ${esc(a.time)}</span>`:'')}
+            ${!schTime&&a.hours?`<span>🕐 ${esc(a.hours)}</span>`:''}
+          </div>`:''}
         </div>
-        ${hasDetail?`<div class="ad"><div class="adi">
+        <div class="ad"><div class="adi">
           ${a.description?`<div class="dr"><span class="dl">說明</span><span class="dv">${esc(a.description)}</span></div>`:''}
-          ${a.hours?`<div class="dr"><span class="dl">營業</span><span class="dv">${esc(a.hours)}</span></div>`:''}
+          ${a.hours?`<div class="dr"><span class="dl">${a.type==='移動'?'航班':'營業'}</span><span class="dv">${esc(a.hours)}</span></div>`:''}
           ${a.facilities&&a.facilities.length?`<div class="dr"><span class="dl">設施</span><div class="ftags">${a.facilities.map(f=>`<span class="ftag">${FICON[f]||'📍'} ${esc(f)}</span>`).join('')}</div></div>`:''}
           ${a.notes?(a.notes.includes('TODO')?`<div class="ntodo">📌 ${esc(a.notes)}</div>`:`<div class="nwarn">${esc(a.notes)}</div>`):''}
           ${a.type!=='移動'?`<a class="mlink" href="${getMapUrl(a)}" target="_blank" rel="noopener">📍 Google Maps</a>`:''}
-        </div></div>`:''}
+          <div class="nt-card">
+            <textarea class="nt-input" data-nk="${key}" placeholder="📝 寫下備註...">${esc(noteVal)}</textarea>
+          </div>
+        </div></div>
       </div>`;
     }
 
@@ -337,15 +392,29 @@
       </div>`;
     }
 
-    function renderAccom(acc){
+    function renderAccom(acc,day){
       if(!acc.name) return '';
-      return `<div class="acard">
-        <div class="ai">🏠</div>
-        <div style="flex:1">
+      const akey = 'acc-'+day;
+      const isEx = S.exp.has(akey);
+      const noteVal = S.nt[akey]||'';
+      const isPlace = acc.name!=='飛機上';
+      const mapUrl = acc.mapLink || (isPlace?'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(acc.name+' New Zealand'):'');
+      const icon = isPlace?'🏠':'✈️';
+      return `<div class="acard${isEx?' ex':''}">
+        <div class="acard-h" data-a="tog" data-v="${akey}">
+          <span class="ai">${icon}</span>
           <h3>${esc(acc.name)}</h3>
-          ${acc.price?`<p class="aprice">${esc(acc.price)}</p>`:''}
-          ${acc.notes?`<p>${esc(acc.notes)}</p>`:''}
+          ${noteVal?'<span class="nt-dot"></span>':''}
+          <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
         </div>
+        <div class="acard-d"><div class="acard-di">
+          ${acc.price?`<p class="aprice">💰 ${esc(acc.price)}</p>`:''}
+          ${acc.notes?`<p>${esc(acc.notes)}</p>`:''}
+          ${mapUrl?`<a class="mlink" href="${mapUrl}" target="_blank" rel="noopener">📍 Google Maps</a>`:''}
+          <div class="nt-card">
+            <textarea class="nt-input" data-nk="${akey}" placeholder="📝 住宿備註...">${esc(noteVal)}</textarea>
+          </div>
+        </div></div>
       </div>`;
     }
 
@@ -380,19 +449,37 @@
       </div>`;
     }
 
-    // ===== Checklist =====
+    // ===== Packing List =====
     function renderCheck(){
-      const total = DATA.checklist.length;
-      const done = DATA.checklist.filter((_,i)=>S.cl[i]).length;
-      const pct = Math.round(done/total*100);
+      const pl = DATA.packingList;
+      let total=0, done=0;
+      pl.forEach((cat,ci)=>cat.items.forEach((_,ii)=>{total++;if(S.cl[ci+'-'+ii])done++}));
+      const pct = total?Math.round(done/total*100):0;
       return `<div class="ct">
-        <div class="stitle">✅ 待辦清單</div>
-        <p style="font-size:.82rem;color:var(--text-2);margin-bottom:.75rem">${done}/${total} 完成 (${pct}%)</p>
+        <div class="stitle">🧳 行李清單</div>
+        <p style="font-size:.82rem;color:var(--text-2);margin-bottom:.75rem">${done}/${total} 已打包 (${pct}%)</p>
         <div class="clprog"><div class="clbar" style="width:${pct}%"></div></div>
-        ${DATA.checklist.map((item,i)=>`<div class="cli${S.cl[i]?' ck':''}" data-a="ck" data-v="${i}">
-          <div class="clcb">${S.cl[i]?'✓':''}</div>
-          <span class="cltx">${esc(item.item)}</span>
-        </div>`).join('')}
+        ${pl.map((cat,ci)=>{
+          const catDone=cat.items.filter((_,ii)=>S.cl[ci+'-'+ii]).length;
+          const closed=S.cc.has(ci);
+          return `<div class="plcat${closed?' closed':''}">
+            <div class="plch" data-a="cattog" data-v="${ci}">
+              <span class="plci">${cat.icon}</span>
+              <span class="plcn">${esc(cat.cat)}</span>
+              ${cat.who?`<span class="pltag">${esc(cat.who)}</span>`:''}
+              <span class="plcc">${catDone}/${cat.items.length}</span>
+              <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div class="plcl">${cat.items.map((item,ii)=>{
+              const key=ci+'-'+ii;const ck=S.cl[key];
+              return `<div class="cli${ck?' ck':''}" data-a="ck" data-v="${key}">
+                <div class="clcb">${ck?'✓':''}</div>
+                <span class="cltx">${esc(item.item)}</span>
+                ${item.who?`<span class="pltag">${esc(item.who)}</span>`:''}
+              </div>`;
+            }).join('')}</div>
+          </div>`;
+        }).join('')}
       </div>`;
     }
 
@@ -482,7 +569,7 @@
       if(a==='tog'){
         e.preventDefault();
         const key = v;
-        const card = t.closest('.ac');
+        const card = t.closest('.ac')||t.closest('.acard');
         if(S.exp.has(key)){S.exp.delete(key);card.classList.remove('ex')}
         else{S.exp.add(key);card.classList.add('ex')}
       }
@@ -494,12 +581,25 @@
         const sec = t.closest('.cxs');
         if(sec) sec.classList.toggle('open');
       }
+      if(a==='cattog'){
+        const ci = Number(v);
+        if(S.cc.has(ci)) S.cc.delete(ci); else S.cc.add(ci);
+        const ct = document.getElementById('ct');
+        if(ct) ct.innerHTML = renderContent();
+      }
       if(a==='ck'){
-        const idx = Number(v);
-        S.cl[idx] = !S.cl[idx];
+        S.cl[v] = !S.cl[v];
         saveCL();
         const ct = document.getElementById('ct');
         if(ct) ct.innerHTML = renderContent();
+      }
+    });
+
+    // ===== Note Input =====
+    document.getElementById('app').addEventListener('input', function(e){
+      if(e.target.classList.contains('nt-input')){
+        const key = e.target.dataset.nk;
+        if(key){S.nt[key]=e.target.value;saveNT()}
       }
     });
 
