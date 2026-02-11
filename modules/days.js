@@ -552,9 +552,10 @@ export const DAYS = [
         }
       ],
       "accommodation": {
-        "name": "Queenstown - Hampshire Holiday Parks / Queenstown Top 10",
+        "name": "Driftaway Queenstown",
         "notes": "",
-        "price": ""
+        "price": "",
+        "mapLink": "https://www.google.com/maps/search/?api=1&query=Driftaway+Queenstown"
       },
       "driveNotes": "8號公路 & 80號公路｜會經過 Cromwell，若時間充裕可彈性停留水果小鎮 (駕駛時間已乘以 1.5 倍考量)"
     },
