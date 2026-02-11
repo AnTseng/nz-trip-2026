@@ -36,6 +36,7 @@
       --type-移動: #6889a0; --type-移動-bg: #e8f0f5;
       --type-作業: #8b7da8; --type-作業-bg: #eeeaf5;
       --type-住宿: #a08060; --type-住宿-bg: #f5efe8;
+      --type-參考: #d97706; --type-參考-bg: #fef3c7;
     }
     *{box-sizing:border-box;margin:0;padding:0}
     html{scroll-behavior:smooth;-webkit-tap-highlight-color:transparent}
@@ -108,6 +109,7 @@
     .ac[data-t="移動"]::before{background:var(--type-移動)}
     .ac[data-t="作業"]::before{background:var(--type-作業)}
     .ac[data-t="住宿"]::before{background:var(--type-住宿)}
+    .ac[data-t="參考"]::before{background:var(--type-參考)}
 
     .ah{display:flex;flex-wrap:wrap;align-items:center;padding:.55rem .7rem .45rem;cursor:pointer;gap:.3rem .45rem;-webkit-tap-highlight-color:transparent}
     .ah-top{display:flex;align-items:center;gap:.45rem;width:100%;min-width:0}
@@ -121,6 +123,7 @@
     .ab-移動{background:var(--type-移動-bg);color:var(--type-移動)}
     .ab-作業{background:var(--type-作業-bg);color:var(--type-作業)}
     .ab-住宿{background:var(--type-住宿-bg);color:var(--type-住宿)}
+    .ab-參考{background:var(--type-參考-bg);color:var(--type-參考)}
     .chev{flex-shrink:0;width:18px;height:18px;transition:transform .3s;color:var(--text-3)}
     .ac.ex .chev{transform:rotate(180deg)}
 
