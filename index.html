@@ -56,6 +56,7 @@
     .dp.on{background:var(--primary);color:#fff;border-color:var(--primary);font-weight:600}
     .dp .dd{font-weight:500;font-size:.73rem}
     .dp .dw{font-size:.62rem;opacity:.7}
+    .dp .dn{font-size:.62rem;opacity:.5;margin-top:1px}
 
     /* ===== Content ===== */
     .ct{padding:1rem;max-width:640px;margin:0 auto;padding-bottom:3rem}
@@ -70,6 +71,13 @@
 
     /* ===== Drive Note ===== */
     .dnote{background:#fef9ef;border-left:3px solid var(--accent);padding:.45rem .7rem;margin-bottom:.85rem;font-size:.78rem;border-radius:0 6px 6px 0;color:#7a6540}
+
+    /* ===== Weather Info ===== */
+    .weather-info{background:#e0f7fa;border-left:3px solid #00bcd4;padding:.45rem .7rem;margin-bottom:.85rem;font-size:.78rem;border-radius:0 6px 6px 0;color:#006064}
+    .weather-info a{color:#006064;text-decoration:underline}
+    .weather-info .wi-label{font-weight:600;margin-right:.4em}
+    .weather-info div{margin-bottom:.2em}
+    .weather-info div:last-child{margin-bottom:0}
 
     /* ===== Map Section ===== */
     .map-sec{margin-bottom:.85rem;border-radius:var(--r-sm);overflow:hidden;background:var(--surface);box-shadow:var(--shadow)}
@@ -111,17 +119,37 @@
 
     /* Details */
     .ad{max-height:0;overflow:hidden;transition:max-height .3s ease-out}
-    .ac.ex .ad{max-height:500px;transition:max-height .4s ease-in}
+    .ac.ex .ad{max-height:1200px;transition:max-height .4s ease-in}
     .adi{padding:0 .7rem .7rem;border-top:1px solid var(--border)}
     .dr{display:flex;align-items:flex-start;gap:.4rem;margin-top:.45rem;font-size:.78rem;color:var(--text-2)}
     .dl{font-weight:600;color:var(--text);min-width:40px;flex-shrink:0;font-size:.75rem}
-    .dv{flex:1}
+    .dv{flex:1;white-space:pre-line}
     .ftags{display:flex;gap:.3rem;flex-wrap:wrap;margin-top:.3rem}
     .ftag{display:inline-flex;align-items:center;gap:.15rem;padding:.1rem .35rem;background:#f0f1f0;border-radius:3px;font-size:.68rem}
     .nwarn{background:#fef9ef;border-left:2px solid var(--accent);padding:.3rem .5rem;margin-top:.4rem;border-radius:0 4px 4px 0;font-size:.75rem;color:#7a6540}
     .ntodo{background:#fff4e5;border-left:2px solid #f59e0b;padding:.3rem .5rem;margin-top:.4rem;border-radius:0 4px 4px 0;font-size:.75rem;color:#92600a}
-    .mlink{display:inline-flex;align-items:center;gap:.25rem;padding:.2rem .5rem;background:var(--primary-light);color:var(--primary);border-radius:4px;font-size:.72rem;margin-top:.4rem;transition:background .2s}
+    .mlink{display:inline-flex;align-items:center;gap:.25rem;padding:.2rem .5rem;background:var(--primary-light);color:var(--primary);border-radius:4px;font-size:.72rem;margin-top:.4rem;transition:background .2s;margin-right:.3rem}
+    .mlink.doc{background:#e8f5e9;color:#2e7d32}
+    .ah-ticket{background:#fff3e0;color:#e65100;padding:6px 10px;border-radius:8px;font-size:.78rem;font-weight:600;margin-top:6px;display:inline-block}
     .mlink:hover{background:#d4ebe5}
+
+    /* ===== Food Tab ===== */
+    .fc-city{margin-bottom:.6rem;border-radius:var(--r);overflow:hidden;background:var(--surface);box-shadow:var(--shadow)}
+    .fc-city-h{display:flex;align-items:center;justify-content:space-between;padding:.65rem .85rem;cursor:pointer;user-select:none;background:var(--primary-light);border-bottom:2px solid var(--primary);transition:background .2s}
+    .fc-city-h:active{background:#d4ebe5}
+    .fc-city-name{font-size:.92rem;font-weight:700;color:var(--primary-dark)}
+    .fc-city-meta{display:flex;align-items:center;gap:.4rem}
+    .fc-day{font-size:.65rem;background:var(--surface);color:var(--primary);padding:.15rem .45rem;border-radius:10px;white-space:nowrap;font-weight:600}
+    .fc-cnt{font-size:.62rem;background:var(--accent);color:#fff;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700}
+    .fc-chev{color:var(--primary);transition:transform .3s;flex-shrink:0}
+    .fc-city:not(.open) .fc-chev{transform:rotate(-90deg)}
+    .fc-items{padding:0 .85rem;max-height:2000px;overflow:hidden;transition:max-height .35s ease,padding .35s ease}
+    .fc-city:not(.open) .fc-items{max-height:0;padding:0 .85rem}
+    .fc-city:not(.open) .fc-city-h{border-bottom-color:transparent}
+    .fc-card{padding:.55rem 0;border-bottom:1px solid var(--border)}
+    .fc-card:last-child{border-bottom:none}
+    .fc-name{font-size:.88rem;font-weight:600;color:var(--text)}
+    .fc-note{font-size:.78rem;color:var(--accent);font-weight:500;margin-top:.15rem}
 
     /* ===== Accommodation ===== */
     .acard{background:var(--surface);border-radius:var(--r-sm);box-shadow:var(--shadow);margin-top:.6rem;margin-bottom:.85rem;overflow:hidden}
@@ -223,8 +251,10 @@
     <div style="padding:3rem;text-align:center;color:var(--text-2)">載入中...</div>
   </div>
 
-  <script src="data.js"></script>
-  <script>
+  <script type="module">
+  // 等待 data.js 載入完成
+  await import('./data.js');
+
   (function(){
     // ===== State =====
     const S = {
@@ -246,6 +276,7 @@
     function saveNT(){localStorage.setItem('nz26nt',JSON.stringify(S.nt))}
 
     const FICON = {'停車場':'🅿️','廁所':'🚻','路邊停車':'🚗','付費廁所':'💰'};
+    const TICON = {'移動':'✈️','景點':'📍','吃喝':'🍽️','住宿':'🏠','作業':'📋'};
     const GMAP_URL = 'https://www.google.com/maps/d/u/0/viewer?mid=1I-Tn1fN0KJmqLi_xYKibtde2L8Gn2lo';
 
     // ===== Render =====
@@ -270,6 +301,7 @@
     function renderTabs(){
       const tabs = [
         {k:'itin',i:'🗓',l:'行程'},
+        {k:'food',i:'🍽',l:'美食'},
         {k:'flights',i:'✈️',l:'航班'},
         {k:'check',i:'🧳',l:'行李'},
         {k:'tips',i:'📋',l:'須知'}
@@ -284,6 +316,7 @@
     function renderContent(){
       switch(S.tab){
         case 'itin': return renderItin();
+        case 'food': return renderFood();
         case 'flights': return renderFlights();
         case 'check': return renderCheck();
         case 'tips': return renderTips();
@@ -301,6 +334,7 @@
         return `<div class="dp${S.day===d.day?' on':''}" data-a="day" data-v="${d.day}">
           <div class="dd">${isF?'✈️ ':''}${d.date}</div>
           <div class="dw">${d.weekday}</div>
+          <div class="dn">D${d.day}</div>
         </div>`;
       }).join('')}</div>`;
     }
@@ -323,6 +357,18 @@
         ${d.route?`<span class="st">📍 ${d.route}</span>`:''}
       </div>`:''}
       ${d.driveNotes?`<div class="dnote">📌 ${esc(d.driveNotes)}</div>`:''}
+      ${(function() {
+        const weather = getWeatherForDay(d.title, d.accommodation ? d.accommodation.name : '');
+        if (weather) {
+          return `<div class="weather-info">
+            <div><span class="wi-label">天氣概況:</span> <a href="${esc(weather.url)}" target="_blank" rel="noopener">${esc(weather.location)}</a></div>
+            <div><span class="wi-label">溫度:</span> ${esc(weather.temp)}</div>
+            <div><span class="wi-label">狀況:</span> ${esc(weather.condition)}</div>
+            <div><span class="wi-label">建議:</span> ${esc(weather.tips)}</div>
+          </div>`;
+        }
+        return '';
+      })()}
       <div class="map-sec" id="mapsec">
         <div class="map-tog" data-a="maptog">
           🗺️ 顯示路線地圖
@@ -353,10 +399,10 @@
       const hasSub = schTime||a.time||drv;
       const noteVal = S.nt[key]||'';
       return `<div class="ac${isEx?' ex':''}" data-t="${a.type}" data-k="${key}">
-        ${drv?`<div class="ah-drive">🚗 ${esc(drv)}</div>`:''}
+        ${drv?`<div class="ah-drive">${drv.includes('步行')?'🚶':drv.includes('計程車')?'🚕':'🚗'} ${esc(drv)}</div>`:''}
         <div class="ah" data-a="tog" data-v="${key}">
           <div class="ah-top">
-            <span class="ab ab-${a.type}">${a.type}</span>
+            ${a.type.split('+').map(t=>`<span class="ab ab-${t}">${TICON[t]||'📌'} ${t}</span>`).join('')}
             <span class="an">${esc(a.name)}</span>
             ${noteVal?'<span class="nt-dot"></span>':''}
             <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
@@ -370,7 +416,9 @@
           ${a.description?`<div class="dr"><span class="dl">說明</span><span class="dv">${esc(a.description)}</span></div>`:''}
           ${a.hours?`<div class="dr"><span class="dl">${a.type==='移動'?'航班':'營業'}</span><span class="dv">${esc(a.hours)}</span></div>`:''}
           ${a.facilities&&a.facilities.length?`<div class="dr"><span class="dl">設施</span><div class="ftags">${a.facilities.map(f=>`<span class="ftag">${FICON[f]||'📍'} ${esc(f)}</span>`).join('')}</div></div>`:''}
+          ${a.ticket?`<div class="ah-ticket">🎫 ${esc(a.ticket)}</div>`:''}
           ${a.notes?(a.notes.includes('TODO')?`<div class="ntodo">📌 ${esc(a.notes)}</div>`:`<div class="nwarn">${esc(a.notes)}</div>`):''}
+          ${a.docLink?`<a class="mlink doc" href="${a.docLink}" target="_blank" rel="noopener">📋 DOC 步道資訊</a>`:''}
           ${a.type!=='移動'?`<a class="mlink" href="${getMapUrl(a)}" target="_blank" rel="noopener">📍 Google Maps</a>`:''}
           <div class="nt-card">
             <textarea class="nt-input" data-nk="${key}" placeholder="📝 寫下備註...">${esc(noteVal)}</textarea>
@@ -418,6 +466,31 @@
       </div>`;
     }
 
+    // ===== Food =====
+    function renderFood(){
+      return `<div class="ct">
+        <div class="stitle">🍽 美食推薦</div>
+        <p style="font-size:.82rem;color:var(--text-2);margin-bottom:1rem">依城市分類，點擊展開 / 收合</p>
+        ${DATA.food.map((g,gi)=>`
+          <div class="fc-city open" data-fc="${gi}">
+            <div class="fc-city-h" data-a="fc-tog" data-v="${gi}">
+              <span class="fc-city-name">${esc(g.city)}</span>
+              <span class="fc-city-meta"><span class="fc-day">${esc(g.days)}</span><span class="fc-cnt">${g.items.length}</span><svg class="fc-chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></span>
+            </div>
+            <div class="fc-items">
+              ${g.items.map(r=>`
+                <div class="fc-card">
+                  <div class="fc-name">${esc(r.name)}</div>
+                  ${r.note?`<div class="fc-note">${esc(r.note)}</div>`:''}
+                  <a href="${r.mapLink||('https://www.google.com/maps/search/'+encodeURIComponent(r.name+' New Zealand'))}" target="_blank" rel="noopener" class="mlink" style="margin-top:.3rem;font-size:.72rem">📍 Google Maps</a>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `).join('')}
+      </div>`;
+    }
+
     // ===== Flights =====
     function renderFlights(){
       return `<div class="ct">
@@ -455,10 +528,39 @@
       let total=0, done=0;
       pl.forEach((cat,ci)=>cat.items.forEach((_,ii)=>{total++;if(S.cl[ci+'-'+ii])done++}));
       const pct = total?Math.round(done/total*100):0;
+
+      // 收集所有負責人
+      const whoSet = new Set();
+      pl.forEach(cat=>cat.items.forEach(item=>{if(item.who)whoSet.add(item.who)}));
+      const whoOrder = ['爸','媽','Ann','翔'];
+      const whos = whoOrder.filter(w=>whoSet.has(w));
+      const whoColors = {'爸':'#5b9bd5','媽':'#ff69b4','Ann':'#f4c430','翔':'#4caf50'};
+
       return `<div class="ct">
         <div class="stitle">🧳 行李清單</div>
         <p style="font-size:.82rem;color:var(--text-2);margin-bottom:.75rem">${done}/${total} 已打包 (${pct}%)</p>
         <div class="clprog"><div class="clbar" style="width:${pct}%"></div></div>
+
+        <div style="background:var(--accent-light);border-left:3px solid var(--accent);padding:.75rem 1rem;border-radius:var(--r-sm);margin:.75rem 0;font-size:.8rem;line-height:1.6">
+          <div style="font-weight:600;color:var(--accent);margin-bottom:.5rem">✈️ 托運行李注意事項</div>
+          <div style="color:var(--text-2)">
+            <div style="margin-bottom:.3rem">📦 <strong>重量限制</strong>：經濟艙單件最多 23kg，商務艙 32kg</div>
+            <div style="margin-bottom:.3rem">💧 <strong>液體規定</strong>：手提行李單瓶≤100ml，總量≤1L（需裝透明袋）</div>
+            <div style="margin-bottom:.3rem">🔋 <strong>電池/行動電源</strong>：必須手提，≤100Wh 最多 20 件，＞100Wh 需申報</div>
+            <div style="margin-bottom:.3rem">🚫 <strong>打火機</strong>：燃料式打火機禁止托運和手提</div>
+            <div style="margin-bottom:.3rem">🚬 <strong>香煙</strong>：可攜帶但需符合目的地海關規定</div>
+            <div style="font-size:.72rem;color:var(--text-3);margin-top:.5rem">
+              詳見：<a href="https://www.cathaypacific.com/cx/zh_TW/baggage.html" target="_blank" style="color:var(--accent)">國泰航空行李規定</a>
+            </div>
+          </div>
+        </div>
+
+        ${whos.length>0?`<div style="display:flex;gap:.5rem;flex-wrap:wrap;margin:.75rem 0">
+          ${whos.map(who=>{
+            const color=whoColors[who]||'#888';
+            return `<span style="display:inline-block;padding:.25rem .6rem;border-radius:12px;font-size:.75rem;background:${color}22;color:${color};border:1px solid ${color}44">${esc(who)}</span>`;
+          }).join('')}
+        </div>`:''}
         ${pl.map((cat,ci)=>{
           const catDone=cat.items.filter((_,ii)=>S.cl[ci+'-'+ii]).length;
           const closed=S.cc.has(ci);
@@ -472,10 +574,14 @@
             </div>
             <div class="plcl">${cat.items.map((item,ii)=>{
               const key=ci+'-'+ii;const ck=S.cl[key];
+              const itemColor=item.who?whoColors[item.who]||'#888':'';
               return `<div class="cli${ck?' ck':''}" data-a="ck" data-v="${key}">
                 <div class="clcb">${ck?'✓':''}</div>
-                <span class="cltx">${esc(item.item)}</span>
-                ${item.who?`<span class="pltag">${esc(item.who)}</span>`:''}
+                <div style="flex:1">
+                  <span class="cltx">${esc(item.item)}</span>
+                  ${item.who?`<span class="pltag" style="background:${itemColor}22;color:${itemColor};border-color:${itemColor}44">${esc(item.who)}</span>`:''}
+                  ${item.notes?`<div style="font-size:.72rem;color:var(--text-3);margin-top:.15rem">${esc(item.notes)}</div>`:''}
+                </div>
               </div>`;
             }).join('')}</div>
           </div>`;
@@ -593,6 +699,10 @@
         const ct = document.getElementById('ct');
         if(ct) ct.innerHTML = renderContent();
       }
+      if(a==='fc-tog'){
+        const sec = t.closest('.fc-city');
+        if(sec) sec.classList.toggle('open');
+      }
     });
 
     // ===== Note Input =====
@@ -609,6 +719,29 @@
       const q = encodeURIComponent(a.name + ' New Zealand');
       return 'https://www.google.com/maps/search/?api=1&query=' + q;
     }
+
+    function getWeatherForDay(dayTitle, accommodationName) {
+      const weatherMap = {
+        '基督城': DATA.weatherInfo.christchurch,
+        '蒂卡波': DATA.weatherInfo.tekapo,
+        '庫克山': DATA.weatherInfo.mtcook,
+        '皇后鎮': DATA.weatherInfo.queenstown,
+        '蒂阿瑙': DATA.weatherInfo.teanau,
+        '神奇峽灣': DATA.weatherInfo.milford, // Using Milford for Doubtful Sound
+        '瓦納卡': DATA.weatherInfo.wanaka,
+        '西海岸': DATA.weatherInfo.westcoast,
+        '福克斯冰河': DATA.weatherInfo.westcoast, // Fox Glacier is on West Coast
+        '霍基蒂卡': DATA.weatherInfo.westcoast, // Hokitika is on West Coast
+      };
+
+      for (const keyword in weatherMap) {
+        if (dayTitle.includes(keyword) || (accommodationName && accommodationName.includes(keyword))) {
+          return weatherMap[keyword];
+        }
+      }
+      return null;
+    }
+
     function esc(s){
       if(!s) return '';
       return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
