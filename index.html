@@ -268,7 +268,7 @@
 
     function getAutoDay(){
       const d = Math.floor((new Date()-new Date('2026-02-13'))/864e5);
-      return d>=0&&d<=18?d:1;
+      return d>=0&&d<=18?d:0;
     }
     function loadCL(){try{return JSON.parse(localStorage.getItem('nz26pk')||'{}')}catch(e){return{}}}
     function saveCL(){localStorage.setItem('nz26pk',JSON.stringify(S.cl))}
