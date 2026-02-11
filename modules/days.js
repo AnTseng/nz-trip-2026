@@ -138,7 +138,7 @@ export const DAYS = [
           "廁所"
         ],
         "description": "位於 Ashburton 市中心，占地 37 公頃，富含綠地、花園和各式娛樂設施的大型公園",
-        "mapLink": "https://www.google.com/maps/place/Ashburton+Domain",
+        "mapLink": "",
         "notes": "中途休息用",
         "cancelled": false,
         "nameCn": "艾士伯頓莊園",
