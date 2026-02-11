@@ -3,8 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="2026年2月紐西蘭南島自駕旅遊行程規劃">
+  <meta name="theme-color" content="#2a7c6f">
+
+  <!-- PWA -->
+  <link rel="manifest" href="/manifest.json">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="theme-color" content="#1e5d54">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="NZ Trip 2026">
+
   <title>紐西蘭南島 2026</title>
   <style>
     :root {
@@ -59,7 +66,7 @@
     .dp .dn{font-size:.62rem;opacity:.5;margin-top:1px}
 
     /* ===== Content ===== */
-    .ct{padding:1rem;max-width:640px;margin:0 auto;padding-bottom:3rem}
+    .ct{padding:1rem;max-width:640px;margin:0 auto;padding-bottom:3rem;min-height:100vh}
 
     /* ===== Day Header ===== */
     .dh h2{font-size:1.2rem;font-weight:700;margin-bottom:.15rem;line-height:1.3}
@@ -212,12 +219,12 @@
     /* ===== Notes ===== */
     .nt-day{background:var(--surface);border-radius:var(--r-sm);box-shadow:var(--shadow);padding:.6rem .7rem;margin-bottom:.85rem}
     .nt-lbl{font-size:.78rem;font-weight:500;color:var(--text-2);margin-bottom:.3rem;display:flex;align-items:center;gap:.3rem}
-    .nt-input{width:100%;border:1px solid var(--border);border-radius:6px;padding:.4rem .55rem;font-size:.78rem;font-family:var(--font);resize:vertical;min-height:2.4rem;background:var(--surface);color:var(--text);line-height:1.5}
+    .nt-input{width:100%;border:1px solid var(--border);border-radius:6px;padding:.4rem .55rem;font-size:1rem;font-family:var(--font);resize:vertical;min-height:2.4rem;background:var(--surface);color:var(--text);line-height:1.5}
     .nt-input:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 2px rgba(42,124,111,.15)}
     .nt-input::placeholder{color:var(--text-3)}
     .nt-card{margin-top:.45rem;padding-top:.35rem;border-top:1px dashed var(--border)}
     .adi>.nt-card:first-child{border-top:none;margin-top:0;padding-top:.1rem}
-    .nt-card .nt-input{min-height:2rem;font-size:.75rem}
+    .nt-card .nt-input{min-height:2rem;font-size:1rem}
     .nt-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0;margin-left:-.2rem}
 
     /* ===== Tips ===== */
@@ -670,6 +677,10 @@
         S.tab = v;
         S.exp.clear();
         render();
+        // 航班、行李、須知頁籤滾動到頂端，行程和美食保留位置
+        if(v==='flights'||v==='check'||v==='tips'){
+          raf(()=>window.scrollTo({top:0,behavior:'smooth'}));
+        }
       }
       if(a==='day'){
         S.day = Number(v);
@@ -678,12 +689,9 @@
         const dv = document.getElementById('dv');
         if(dv) dv.innerHTML = renderDayView();
         raf(()=>{
-          const dv2 = document.getElementById('dv');
-          if(dv2){
-            const rect = dv2.getBoundingClientRect();
-            const offset = 110; // tabs + day-sel 高度
-            window.scrollTo({top:window.pageYOffset + rect.top - offset, behavior:'smooth'});
-          }
+          // 直接滾動到固定位置，確保 header 完全隱藏
+          // Header 約 150-180px，滾動到 200px 確保隱藏
+          window.scrollTo({top:200, behavior:'smooth'});
         });
       }
       if(a==='tog'){
@@ -773,6 +781,17 @@
       render();
     }
   })();
+  </script>
+
+  <!-- Service Worker Registration -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then(reg => console.log('Service Worker 註冊成功:', reg.scope))
+          .catch(err => console.log('Service Worker 註冊失敗:', err));
+      });
+    }
   </script>
 </body>
 </html>

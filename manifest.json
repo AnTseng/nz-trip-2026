@@ -1,0 +1,10 @@
+{
+  "name": "2026 紐西蘭南島旅遊規劃",
+  "short_name": "NZ Trip 2026",
+  "description": "2026年2月紐西蘭南島自駕旅遊行程規劃",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f0f7f6",
+  "theme_color": "#2a7c6f",
+  "orientation": "portrait"
+}
