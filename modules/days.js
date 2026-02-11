@@ -1415,7 +1415,8 @@ export const DAYS = [
       "accommodation": {
         "name": "Distinction Christchurch Hotel",
         "notes": "",
-        "price": ""
+        "price": "",
+        "mapLink": "https://www.google.com/maps/search/?api=1&query=Distinction+Christchurch+Hotel"
       },
       "driveNotes": "73號公路，注意 Castle Hill 偷竊問題 (駕駛時間已乘以 1.5 倍考量)"
     },
