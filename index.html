@@ -420,7 +420,7 @@
               const icon = t === '移動' ? getMoveIcon(a, day) : (TICON[t] || '📌');
               return `<span class="ab ab-${t}">${icon} ${t}</span>`;
             }).join('')}
-            <span class="an">${esc(a.name)}</span>
+            <span class="an">${esc(getDisplayName(a))}</span>
             ${noteVal?'<span class="nt-dot"></span>':''}
             <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
           </div>
@@ -451,7 +451,7 @@
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
         </div>
         <div class="cxi">${items.map(a=>`<div class="cxc">
-          <div class="an">${esc(a.name)}</div>
+          <div class="an">${esc(getDisplayName(a))}</div>
           ${a.notes?`<div class="cn">${esc(a.notes)}</div>`:''}
         </div>`).join('')}</div>
       </div>`;
@@ -463,7 +463,8 @@
       const isEx = S.exp.has(akey);
       const noteVal = S.nt[akey]||'';
       const isPlace = acc.name!=='飛機上';
-      const mapUrl = acc.mapLink || (isPlace?'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(acc.name+' New Zealand'):'');
+      const searchName = extractEnglish(acc.name);
+      const mapUrl = acc.mapLink || (isPlace && searchName?'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(searchName+' New Zealand'):'');
       const icon = isPlace?'🏠':'✈️';
       return `<div class="acard${isEx?' ex':''}">
         <div class="acard-h" data-a="tog" data-v="${akey}">
@@ -499,7 +500,7 @@
                 <div class="fc-card">
                   <div class="fc-name">${esc(r.name)}</div>
                   ${r.note?`<div class="fc-note">${esc(r.note)}</div>`:''}
-                  <a href="${r.mapLink||('https://www.google.com/maps/search/'+encodeURIComponent(r.name+' New Zealand'))}" target="_blank" rel="noopener" class="mlink" style="margin-top:.3rem;font-size:.72rem">📍 Google Maps</a>
+                  <a href="${r.mapLink||('https://www.google.com/maps/search/'+encodeURIComponent(extractEnglish(r.name)+' New Zealand'))}" target="_blank" rel="noopener" class="mlink" style="margin-top:.3rem;font-size:.72rem">📍 Google Maps</a>
                 </div>
               `).join('')}
             </div>
@@ -740,8 +741,23 @@
     // ===== Utils =====
     function getMapUrl(a){
       if(a.mapLink) return a.mapLink;
-      const q = encodeURIComponent(a.name + ' New Zealand');
+      const searchName = a.nameEn || a.nameCn || '';
+      if (!searchName) return '';
+      const q = encodeURIComponent(searchName + ' New Zealand');
       return 'https://www.google.com/maps/search/?api=1&query=' + q;
+    }
+
+    function getDisplayName(a){
+      if (a.nameCn && a.nameEn) {
+        return `${a.nameCn} ${a.nameEn}`;
+      }
+      return a.nameCn || a.nameEn || '';
+    }
+
+    function extractEnglish(str){
+      if (!str) return '';
+      const enMatch = str.match(/[a-zA-Z][a-zA-Z0-9\s\-'&.()]*/g);
+      return enMatch ? enMatch.join(' ').trim() : str;
     }
 
     function getWeatherForDay(dayTitle, accommodationName) {
