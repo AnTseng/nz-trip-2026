@@ -529,11 +529,13 @@
     }
 
     function renderFLeg(leg){
+      const fromText = esc(leg.from) + (leg.fromTerminal ? ` (${leg.fromTerminal})` : '');
+      const toText = esc(leg.to) + (leg.toTerminal ? ` (${leg.toTerminal})` : '');
       return `${leg.transit?`<div class="ftr">⏳ 轉機等候 ${leg.transit}</div>`:''}
       <div class="fl">
         <div class="fe">✈️</div>
         <div class="fi">
-          <div class="fr">${esc(leg.from)} → ${esc(leg.to)}</div>
+          <div class="fr">${fromText} → ${toText}</div>
           <div class="fd">${leg.flight} · ${leg.depart} → ${leg.arrive} · ${leg.duration}</div>
         </div>
       </div>`;
