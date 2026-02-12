@@ -82,9 +82,16 @@ export const FOOD = [
       ]
     },
     {
-      "city": "West Coast 西海岸", "days": "D14-D15",
+      "city": "Fox Glacier 福克斯冰河", "days": "D14",
       "items": [
-        { "name": "South Westland Salmon Farm Cafe", "note": "" }
+        { "name": "Betsey Jane Eatery & Bar", "note": "就在 Top 10 營地旁邊，評價極高，建議預約" },
+        { "name": "South Westland Salmon Farm Cafe", "note": "鮭魚農場咖啡廳，路過可以休息吃點心" }
+      ]
+    },
+    {
+      "city": "Hokitika 霍基蒂卡", "days": "D15",
+      "items": [
+        { "name": "Fat Pipi Pizza", "note": "必吃銀魚比薩 (Whitebait Pizza)" }
       ]
     }
 ];

@@ -155,6 +155,17 @@
     .mlink:hover{background:#d4ebe5}
 
     /* ===== Food Tab ===== */
+    .food-info-section{display:grid;grid-template-columns:1fr;gap:.75rem;margin-bottom:1.5rem}
+    @media(min-width:600px){.food-info-section{grid-template-columns:1fr 1fr}}
+    .food-info-card{background:var(--surface);border-radius:var(--r);padding:.85rem;box-shadow:var(--shadow);border-left:3px solid var(--primary)}
+    .food-info-card h3{font-size:.95rem;font-weight:700;color:var(--primary-dark);margin-bottom:.5rem;display:flex;align-items:center;gap:.3rem}
+    .food-info-card p{font-size:.8rem;color:var(--text-2);line-height:1.5;margin-bottom:.6rem}
+    .food-info-card ul{margin:.5rem 0 .6rem 1.2rem;padding:0}
+    .food-info-card li{font-size:.78rem;color:var(--text-2);line-height:1.6;margin:.3rem 0}
+    .food-info-card strong{color:var(--text);font-weight:600}
+    .food-info-link{display:inline-flex;align-items:center;gap:.3rem;padding:.4rem .75rem;background:var(--primary);color:#fff;border-radius:6px;font-size:.78rem;font-weight:600;text-decoration:none;transition:background .2s}
+    .food-info-link:hover{background:var(--primary-dark)}
+
     .fc-city{margin-bottom:.6rem;border-radius:var(--r);overflow:hidden;background:var(--surface);box-shadow:var(--shadow)}
     .fc-city-h{display:flex;align-items:center;justify-content:space-between;padding:.65rem .85rem;cursor:pointer;user-select:none;background:var(--primary-light);border-bottom:2px solid var(--primary);transition:background .2s}
     .fc-city-h:active{background:#d4ebe5}
@@ -546,7 +557,28 @@
     function renderFood(){
       return `<div class="ct">
         <div class="stitle">🍽 美食推薦</div>
-        <p style="font-size:.82rem;color:var(--text-2);margin-bottom:1rem">依城市分類，點擊展開 / 收合</p>
+
+        <div class="food-info-section">
+          <div class="food-info-card">
+            <h3>🛒 紐西蘭超市採購指南</h3>
+            <p>在紐西蘭旅行，超市採購是省錢的好方法！了解各大超市的特色、必買商品和價格比較。</p>
+            <a href="https://timtingtravel.com/new-zealand-supermarket/" target="_blank" rel="noopener" class="food-info-link">
+              📖 閱讀完整超市攻略 →
+            </a>
+          </div>
+          <div class="food-info-card">
+            <h3>🍴 美食特色</h3>
+            <ul>
+              <li><strong>鹹派 (Pie)：</strong>紐西蘭國民美食，推薦 Fairlie Bakehouse、Arrowtown Bakery</li>
+              <li><strong>漢堡：</strong>Fergburger 是必吃經典，豬肉口味優於牛肉</li>
+              <li><strong>冰淇淋：</strong>Patagonia Chocolates 是紐西蘭最有名的冰淇淋店</li>
+              <li><strong>鮭魚：</strong>Mt Cook Alpine Salmon Shop、High Country Salmon 提供新鮮鮭魚</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="stitle" style="font-size:1rem;margin-top:1.5rem;margin-bottom:.75rem">📍 依城市分類</div>
+        <p style="font-size:.82rem;color:var(--text-2);margin-bottom:1rem">點擊展開 / 收合</p>
         ${DATA.food.map((g,gi)=>`
           <div class="fc-city open" data-fc="${gi}">
             <div class="fc-city-h" data-a="fc-tog" data-v="${gi}">
