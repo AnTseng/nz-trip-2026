@@ -483,6 +483,8 @@
         </div>
         <div class="acard-d"><div class="acard-di">
           ${acc.price?`<p class="aprice">💰 ${esc(acc.price)}</p>`:''}
+          ${acc.checkIn?`<p>🔑 Check-in: ${esc(acc.checkIn)}</p>`:''}
+          ${acc.checkOut?`<p>🚪 Check-out: ${esc(acc.checkOut)}</p>`:''}
           ${acc.notes?`<p>${esc(acc.notes)}</p>`:''}
           ${mapUrl?`<a class="mlink" href="${mapUrl}" target="_blank" rel="noopener">📍 Google Maps</a>`:''}
           <div class="nt-card">

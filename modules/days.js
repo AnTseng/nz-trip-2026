@@ -92,7 +92,9 @@ export const DAYS = [
       "name": "A Touch of Luxury in CHCH CBD",
       "notes": "Christchurch Central City, Christchurch 8011",
       "price": "",
-      "mapLink": "https://maps.app.goo.gl/Th7W5FPUWbJb5TwD7"
+      "mapLink": "https://maps.app.goo.gl/Th7W5FPUWbJb5TwD7",
+      "checkIn": "15:00 後",
+      "checkOut": "10:00 前"
     },
     "driveNotes": ""
   },
@@ -206,7 +208,9 @@ export const DAYS = [
     "accommodation": {
       "name": "Tekapo - Lakes Edge Holiday Park",
       "notes": "",
-      "price": "140 USD/night"
+      "price": "140 NZD/night",
+      "checkIn": "13:00 後",
+      "checkOut": "10:00 前"
     },
     "driveNotes": "8號公路前往 Tekapo (駕駛時間已乘以 1.5 倍考量)"
   },
@@ -302,7 +306,9 @@ export const DAYS = [
     "accommodation": {
       "name": "Tekapo - Lakes Edge Holiday Park",
       "notes": "",
-      "price": "140 USD/night"
+      "price": "140 NZD/night",
+      "checkIn": "13:00 後",
+      "checkOut": "10:00 前"
     },
     "driveNotes": ""
   },
@@ -494,7 +500,9 @@ export const DAYS = [
     "accommodation": {
       "name": "Mt. Cook - Glentanner Park Centre",
       "notes": "",
-      "price": ""
+      "price": "",
+      "checkIn": "14:00-19:00",
+      "checkOut": "10:00 前"
     },
     "driveNotes": "80號公路(庫克山公路) (駕駛時間已乘以 1.5 倍考量)"
   },
@@ -582,7 +590,9 @@ export const DAYS = [
     "accommodation": {
       "name": "Mt. Cook - Glentanner Park Centre",
       "notes": "",
-      "price": ""
+      "price": "",
+      "checkIn": "14:00-19:00",
+      "checkOut": "10:00 前"
     },
     "driveNotes": ""
   },
@@ -654,7 +664,9 @@ export const DAYS = [
       "name": "Driftaway Queenstown",
       "notes": "",
       "price": "",
-      "mapLink": "https://www.google.com/maps/search/?api=1&query=Driftaway+Queenstown"
+      "mapLink": "https://www.google.com/maps/search/?api=1&query=Driftaway+Queenstown",
+      "checkIn": "14:00 後",
+      "checkOut": "10:00 前"
     },
     "driveNotes": "8號公路 & 80號公路｜會經過 Cromwell，若時間充裕可彈性停留水果小鎮 (駕駛時間已乘以 1.5 倍考量)"
   },
@@ -810,7 +822,9 @@ export const DAYS = [
       "name": "Queenstown - Hampshire Holiday Parks",
       "notes": "",
       "price": "",
-      "mapLink": "https://www.google.com/maps/search/?api=1&query=Queenstown+Hampshire+Holiday+Parks"
+      "mapLink": "https://www.google.com/maps/search/?api=1&query=Queenstown+Hampshire+Holiday+Parks",
+      "checkIn": "15:00-19:00",
+      "checkOut": "10:00 前"
     },
     "driveNotes": "從 Manapouri 返回皇后鎮 (駕駛時間已乘以 1.5 倍考量)"
   },
@@ -899,7 +913,9 @@ export const DAYS = [
       "name": "Queenstown - Hampshire Holiday Parks",
       "notes": "",
       "price": "",
-      "mapLink": "https://www.google.com/maps/search/?api=1&query=Queenstown+Hampshire+Holiday+Parks"
+      "mapLink": "https://www.google.com/maps/search/?api=1&query=Queenstown+Hampshire+Holiday+Parks",
+      "checkIn": "15:00-19:00",
+      "checkOut": "10:00 前"
     },
     "driveNotes": ""
   },
@@ -1008,7 +1024,9 @@ export const DAYS = [
       "name": "Queenstown - Hampshire Holiday Parks",
       "notes": "",
       "price": "",
-      "mapLink": "https://www.google.com/maps/search/?api=1&query=Queenstown+Hampshire+Holiday+Parks"
+      "mapLink": "https://www.google.com/maps/search/?api=1&query=Queenstown+Hampshire+Holiday+Parks",
+      "checkIn": "15:00-19:00",
+      "checkOut": "10:00 前"
     },
     "driveNotes": "皇后鎮 → 格萊諾基 (駕駛時間已乘以 1.5 倍考量)"
   },
@@ -1155,7 +1173,9 @@ export const DAYS = [
     "accommodation": {
       "name": "Wanaka - Wanaka TOP 10 Holiday Park",
       "notes": "",
-      "price": ""
+      "price": "",
+      "checkIn": "14:00-20:00",
+      "checkOut": "10:00 前"
     },
     "driveNotes": "露營車不能走 Crown Range Rd，需改走 State Hwy 6 (駕駛時間已乘以 1.5 倍考量)"
   },
@@ -1240,7 +1260,9 @@ export const DAYS = [
     "accommodation": {
       "name": "Wanaka",
       "notes": "",
-      "price": ""
+      "price": "",
+      "checkIn": "14:00-20:00",
+      "checkOut": "10:00 前"
     },
     "driveNotes": ""
   },
@@ -1300,7 +1322,9 @@ export const DAYS = [
     "accommodation": {
       "name": "Wanaka",
       "notes": "",
-      "price": ""
+      "price": "",
+      "checkIn": "14:00-20:00",
+      "checkOut": "10:00 前"
     },
     "driveNotes": ""
   },
@@ -1462,7 +1486,9 @@ export const DAYS = [
     "accommodation": {
       "name": "Fox Glacier Top 10 Holiday Park",
       "notes": "Check-in 時就先訂好晚上 8-9 點的位置，一邊泡澡一邊看星空",
-      "price": ""
+      "price": "",
+      "checkIn": "14:00-19:00",
+      "checkOut": "10:00 前"
     },
     "driveNotes": "西海岸6號公路：雙湖景公路→翠綠雨林→海岸線 (駕駛時間已乘以 1.5 倍考量)"
   },
@@ -1591,7 +1617,9 @@ export const DAYS = [
     "accommodation": {
       "name": "Hokitika - Hokitika's Kiwi Holiday Park and Motels",
       "notes": "",
-      "price": ""
+      "price": "",
+      "checkIn": "14:00 後",
+      "checkOut": "10:00 前"
     },
     "driveNotes": "福克斯冰河 → 霍基蒂卡 (駕駛時間已乘以 1.5 倍考量)"
   },
@@ -1689,7 +1717,9 @@ export const DAYS = [
       "name": "Distinction Christchurch Hotel",
       "notes": "",
       "price": "",
-      "mapLink": "https://www.google.com/maps/search/?api=1&query=Distinction+Christchurch+Hotel"
+      "mapLink": "https://www.google.com/maps/search/?api=1&query=Distinction+Christchurch+Hotel",
+      "checkIn": "15:00 後",
+      "checkOut": "11:00 前"
     },
     "driveNotes": "73號公路，注意 Castle Hill 偷竊問題 (駕駛時間已乘以 1.5 倍考量)"
   },
