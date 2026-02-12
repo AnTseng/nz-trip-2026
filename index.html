@@ -249,6 +249,18 @@
     .tc .tv{font-size:.82rem;color:var(--text-2)}
     .twarn{background:#fef0f0;border-left:3px solid #e74c3c;padding:.45rem .65rem;border-radius:0 6px 6px 0;margin-top:.4rem;font-size:.78rem;color:#7a2020}
 
+    /* ===== Customs ===== */
+    .customs-section{margin-top:.5rem}
+    .customs-warning,.customs-declare,.customs-note{padding:.5rem .65rem;margin-bottom:.6rem;border-radius:6px;font-size:.78rem}
+    .customs-warning{background:#fff5f5;border-left:3px solid #e74c3c}
+    .customs-warning strong{color:#c0392b;display:block;margin-bottom:.3rem}
+    .customs-declare{background:#fff8e6;border-left:3px solid #f39c12}
+    .customs-declare strong{color:#d68910;display:block;margin-bottom:.3rem}
+    .customs-note{background:#e8f4f8;border-left:3px solid #3498db}
+    .customs-note strong{color:#2980b9}
+    .customs-section ul{margin:.3rem 0 0 1.2rem;padding:0}
+    .customs-section li{margin:.2rem 0;line-height:1.4}
+
     /* ===== Section Title ===== */
     .stitle{font-size:1.15rem;font-weight:700;margin-bottom:.85rem;display:flex;align-items:center;gap:.4rem}
 
@@ -661,6 +673,23 @@
       const tp = DATA.tips;
       return `<div class="ct">
         <div class="stitle">📋 行前須知</div>
+
+        ${tp.customs?`<div class="tc" id="customs-info">
+          <h3>🛃 入關食品規定</h3>
+          <div class="customs-section">
+            <div class="customs-warning">
+              <strong>⛔ 禁止攜帶（違者重罰）</strong>
+              <ul>${tp.customs.prohibited.map(item=>`<li>${esc(item)}</li>`).join('')}</ul>
+            </div>
+            <div class="customs-declare">
+              <strong>⚠️ 可攜帶，但需申報</strong>
+              <ul>${tp.customs.declarable.map(item=>`<li>${esc(item)}</li>`).join('')}</ul>
+            </div>
+            ${tp.customs.noodles_note?`<div class="customs-note">
+              <strong>📦 泡麵/杯麵：</strong>${esc(tp.customs.noodles_note)}
+            </div>`:''}
+          </div>
+        </div>`:''}
 
         <div class="tc">
           <h3>🚗 駕駛須知</h3>
