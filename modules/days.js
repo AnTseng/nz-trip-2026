@@ -110,14 +110,26 @@ export const DAYS = [
       {
         "type": "作業",
         "time": "1hr",
-        "hours": "08:00 租借，09:00 出發",
+        "hours": "08:00 租借，10:30 出發",
         "facilities": [],
         "description": "Booking Reference TNE435650-1\n金額 9785 NZD，定金 2935.5 NZD，尾款 6849.5 NZD (9/19 已付)",
         "mapLink": "https://maps.app.goo.gl/AKXUXLoSr6tzveHq5",
-        "notes": "08:00 取車，預計 09:00 出發",
+        "notes": "08:00 取車，預計 10:30 出發",
         "cancelled": false,
         "nameCn": "取露營車",
         "nameEn": ""
+      },
+      {
+        "type": "作業",
+        "time": "1.5hr",
+        "hours": "07:00-22:00",
+        "facilities": ["停車場"],
+        "description": "【大補貨】拿到大車後，在基督城南邊的 Hornby 買齊這兩週的基礎物資。這家店就在 SH1 旁，非常順路且大車好停。",
+        "mapLink": "https://www.google.com/maps/search/?api=1&query=PAK'nSAVE+Hornby+Christchurch",
+        "notes": "這家比市區店更適合露營車，買完直接上 SH1 往蒂卡波出發。",
+        "cancelled": false,
+        "nameCn": "出發大補貨 (Hornby)",
+        "nameEn": "PAK'nSAVE Hornby"
       },
       {
         "type": "移動",
@@ -147,17 +159,33 @@ export const DAYS = [
         "nameEn": "Ashburton Domain"
       },
       {
-        "type": "吃喝",
-        "time": "30mins",
+        "type": "景點",
+        "time": "1.5hr",
         "hours": "",
         "facilities": [
-          "路邊停車"
+          "停車場",
+          "廁所"
         ],
-        "description": "推薦培根鮭魚鹹派",
+        "description": "位於 Ashburton 市中心，占地 37 公頃，富含綠地、花園的大型公園",
         "mapLink": "",
-        "notes": "",
+        "notes": "中途休息、換手開車用",
         "cancelled": false,
-        "nameCn": "費爾利麵包房",
+        "nameCn": "艾士伯頓莊園",
+        "nameEn": "Ashburton Domain"
+      },
+      {
+        "type": "吃喝",
+        "time": "45mins",
+        "hours": "08:00-16:30",
+        "facilities": [
+          "路邊停車",
+          "停車場"
+        ],
+        "description": "Fairlie Bakehouse 的鹹派是必吃美食！推薦培根鮭魚口味。旁邊有 Four Square 超市可視需求補貨。",
+        "mapLink": "https://www.google.com/maps/search/?api=1&query=Fairlie+Bakehouse",
+        "notes": "排隊名店，買完鹹派可直接在小鎮公園享用。",
+        "cancelled": false,
+        "nameCn": "費爾利名店鹹派",
         "nameEn": "Fairlie Bakehouse"
       },
       {
@@ -203,6 +231,18 @@ export const DAYS = [
         "cancelled": false,
         "nameCn": "狗窩角落",
         "nameEn": "Dog Kennel Corner"
+      },
+      {
+        "type": "作業",
+        "time": "30mins",
+        "hours": "07:30-20:00",
+        "facilities": ["停車場"],
+        "description": "蒂卡波鎮中心的超市，規模中等但應有盡有。距離營地開車 2 分鐘，走路約 15 分鐘。",
+        "mapLink": "https://www.google.com/maps/search/?api=1&query=Four+Square+Tekapo",
+        "notes": "進營地停好車後，可以再來這裡買新鮮食材煮晚餐。",
+        "cancelled": false,
+        "nameCn": "超市補給 (Tekapo)",
+        "nameEn": "Four Square Tekapo"
       }
     ],
     "accommodation": {
@@ -212,7 +252,7 @@ export const DAYS = [
       "checkIn": "13:00 後",
       "checkOut": "10:00 前"
     },
-    "driveNotes": "8號公路前往 Tekapo (駕駛時間已乘以 1.5 倍考量)"
+    "driveNotes": "8號公路前往 Tekapo (預計 10:30 出發，駕駛時間已乘以 1.5 倍考量)"
   },
   {
     "day": 3,
@@ -322,6 +362,20 @@ export const DAYS = [
     "driveTime": "2hr15min",
     "activities": [
       {
+        "type": "作業",
+        "time": "30mins",
+        "hours": "",
+        "facilities": [
+          "停車場"
+        ],
+        "description": "採購兩天在庫克山的食物和補給品",
+        "mapLink": "https://www.google.com/maps/search/?api=1&query=Four+Square+Tekapo",
+        "notes": "建議採購：早餐、午餐食材、飲用水、零食",
+        "cancelled": false,
+        "nameCn": "採購食物",
+        "nameEn": "Four Square Tekapo"
+      },
+      {
         "type": "移動",
         "time": "2hr15min (分段)",
         "hours": "",
@@ -355,12 +409,24 @@ export const DAYS = [
           "路邊停車",
           "廁所"
         ],
-        "description": "普卡基湖觀景台",
-        "mapLink": "",
+        "description": "普卡基湖觀景台，位於 8 號與 80 號公路交界處。這裡可以拍到湖水與遠方庫克山的全景。",
+        "mapLink": "https://www.google.com/maps/search/?api=1&query=Lake+Pukaki+Viewpoint",
         "notes": "",
         "cancelled": false,
-        "nameCn": "",
+        "nameCn": "普卡基湖觀景台",
         "nameEn": "Lake Pukaki Viewpoint"
+      },
+      {
+        "type": "作業",
+        "time": "45mins",
+        "hours": "07:30-20:00",
+        "facilities": ["停車場"],
+        "description": "【繞路 10 分鐘，絕對值得】從交界處往南開 10 分鐘到 Twizel 補齊在庫克山兩天份的食材。山內完全沒有超市！",
+        "mapLink": "https://www.google.com/maps/search/?api=1&query=Four+Square+Twizel",
+        "notes": "非常重要！庫克山村莊內只有極貴的小雜貨店，請務必在此買齊食材。",
+        "cancelled": false,
+        "nameCn": "庫克山前最後補給 (Twizel)",
+        "nameEn": "Four Square Twizel"
       },
       {
         "type": "吃喝",
@@ -369,11 +435,11 @@ export const DAYS = [
         "facilities": [
           "停車場"
         ],
-        "description": "高山鮭魚店",
-        "mapLink": "",
+        "description": "高山鮭魚店，就在 Lake Pukaki 旁的交界處。推薦購買生魚片帶進去庫克山享用。",
+        "mapLink": "https://www.google.com/maps/search/?api=1&query=Mt+Cook+Alpine+Salmon+Shop",
         "notes": "",
         "cancelled": false,
-        "nameCn": "",
+        "nameCn": "高山鮭魚店",
         "nameEn": "Mt Cook Alpine Salmon Shop"
       },
       {
@@ -658,6 +724,18 @@ export const DAYS = [
         "cancelled": false,
         "nameCn": "咆哮梅格瞭望台",
         "nameEn": "Roaring Meg Lookout"
+      },
+      {
+        "type": "作業",
+        "time": "1hr",
+        "hours": "07:00-22:00",
+        "facilities": ["停車場"],
+        "description": "抵達皇后鎮前先到 Frankton 區域大補貨。這是南島最大、最划算的超市之一",
+        "mapLink": "https://www.google.com/maps/search/?api=1&query=PAK'nSAVE+Queenstown",
+        "notes": "這間 PAK'nSAVE 就在機場附近，停車位很多，適合露營車",
+        "cancelled": false,
+        "nameCn": "大補貨 (Queenstown)",
+        "nameEn": "PAK'nSAVE Queenstown"
       }
     ],
     "accommodation": {
@@ -682,11 +760,11 @@ export const DAYS = [
       {
         "type": "移動",
         "time": "3hr45min (分段)",
-        "hours": "12:00 抵達 Manapouri Real Journeys Visitor Centre 報到",
+        "hours": "建議 07:30 出發，12:00 抵達 Manapouri 報到",
         "facilities": [],
         "description": "前往 Manapouri (Doubtful Sound 的出發點)，途中經過 Te Anau 但不停留",
         "mapLink": "",
-        "notes": "駕駛時間已乘以 1.5 倍考量；預計 12:00 抵達 Manapouri 報到，請務必準時",
+        "notes": "這天時間很趕！建議 07:30 出發，確保有時間在 Te Anau 補給並準時抵達報到",
         "cancelled": false,
         "nameCn": "移動",
         "nameEn": "Queenstown  Manapouri"
@@ -816,6 +894,18 @@ export const DAYS = [
         "cancelled": false,
         "nameCn": "湖畔步道",
         "nameEn": "Queenstown Wharf Walk"
+      },
+      {
+        "type": "參考",
+        "time": "",
+        "hours": "",
+        "facilities": [],
+        "description": "從神奇峽灣回到皇后鎮後可以在這裡補給食物和用品\n\n📍 北邊大型超市：\n• PAK'nSAVE Queenstown - 最便宜的大型超市\n• New World Queenstown - 品質較好的連鎖超市\n\n📍 靠近住宿：\n• FreshChoice Queenstown - 中型超市，選擇多樣\n• Four Square Queenstown - 小型超市，方便快速採購",
+        "mapLink": "",
+        "notes": "建議到北邊的 PAK'nSAVE 或 New World 進行主要採購",
+        "cancelled": false,
+        "nameCn": "超市補給",
+        "nameEn": "Queenstown Supermarkets"
       }
     ],
     "accommodation": {
@@ -1168,6 +1258,18 @@ export const DAYS = [
         "cancelled": true,
         "nameCn": "自助採櫻桃",
         "nameEn": "PYO Cherries"
+      },
+      {
+        "type": "作業",
+        "time": "45mins",
+        "hours": "07:00-21:00",
+        "facilities": ["停車場"],
+        "description": "這間 New World 非常新且大，停車位對露營車極度友善。建議在此買齊接下來西海岸兩天的食材",
+        "mapLink": "",
+        "notes": "西海岸 (Fox Glacier) 的 Four Square 很小且貴，建議在 Wanaka 買好",
+        "cancelled": false,
+        "nameCn": "大型超市補給 (Wanaka)",
+        "nameEn": "New World Three Parks"
       }
     ],
     "accommodation": {
@@ -1338,6 +1440,20 @@ export const DAYS = [
     "driveTime": "6hr",
     "activities": [
       {
+        "type": "作業",
+        "time": "30mins",
+        "hours": "",
+        "facilities": [
+          "停車場"
+        ],
+        "description": "前往福克斯冰河前先到超市補充食物和飲用水\n沿途加油站和商店稀少，建議在此採購",
+        "mapLink": "https://www.google.com/maps/search/?api=1&query=New+World+Three+Parks+Wanaka",
+        "notes": "建議採購：飲用水、午餐食材、零食、晚餐食材",
+        "cancelled": false,
+        "nameCn": "超市補貨",
+        "nameEn": "New World Three Parks"
+      },
+      {
         "type": "參考",
         "time": "",
         "hours": "",
@@ -1496,10 +1612,10 @@ export const DAYS = [
     "day": 15,
     "date": "2/28",
     "weekday": "六",
-    "title": "福克斯冰河 → 霍基蒂卡",
-    "route": "Fox Glacier → Hokitika",
-    "km": 160,
-    "driveTime": "3hr45min",
+    "title": "福克斯冰河 → Arthur's Pass",
+    "route": "Fox Glacier → Jackson's Retreat (Arthur's Pass)",
+    "km": 310,
+    "driveTime": "6hr",
     "activities": [
       {
         "type": "景點",
@@ -1551,7 +1667,7 @@ export const DAYS = [
         "description": "離開 Hokitika 小鎮後約 2 小時，若在比較沒風的清晨或傍晚前來，湖面會靜止如鏡子一般",
         "mapLink": "",
         "notes": "",
-        "cancelled": false,
+        "cancelled": true,
         "nameCn": "梅普里卡湖",
         "nameEn": "Lake Mapourika"
       },
@@ -1566,7 +1682,7 @@ export const DAYS = [
         "description": "有露營地的湖泊",
         "mapLink": "",
         "notes": "",
-        "cancelled": false,
+        "cancelled": true,
         "nameCn": "伊安特湖",
         "nameEn": "Lake Ianthe"
       },
@@ -1579,7 +1695,7 @@ export const DAYS = [
         ],
         "description": "距離 Hokitika 小鎮 30-40 分鐘車程，步道來回僅 1.3 公里，沿路無顯著上下坡，約 30-40 分鐘往返\n有許多沙蠅，可攜帶防沙蠅噴劑",
         "mapLink": "",
-        "notes": "沙蚊(沙蠅)嚴重，若做好防護措施可重新考慮",
+        "notes": "可選活動。沙蚊(沙蠅)嚴重，若做好防護措施可重新考慮",
         "cancelled": false,
         "nameCn": "",
         "nameEn": "Hokitika Gorge Walk"
@@ -1595,7 +1711,7 @@ export const DAYS = [
         "description": "有極富特色的樹枝地標，沙灘最南邊還有 Sunset Point (日落點)，除了海洋日落還有停靠許久的荒廢舊船",
         "mapLink": "",
         "notes": "",
-        "cancelled": false,
+        "cancelled": true,
         "nameCn": "霍基蒂卡海灘 標誌",
         "nameEn": "Hokitika Beach Sign"
       },
@@ -1609,40 +1725,65 @@ export const DAYS = [
         "description": "免費看螢火蟲的步道，天黑後務必關閉手機螢幕、手電筒、閃光燈，並保持安靜",
         "mapLink": "",
         "notes": "關閉手機螢幕和手電筒，保持安靜",
-        "cancelled": false,
+        "cancelled": true,
         "nameCn": "螢火蟲幽谷小徑",
         "nameEn": "Glow Worm Dell"
+      },
+      {
+        "type": "作業",
+        "time": "30mins",
+        "hours": "08:00-20:00",
+        "facilities": ["停車場"],
+        "description": "建議在此採購晚餐食材，在 Jackson's Retreat 營地寬敞的廚房煮一頓好的，或者直接在車上邊看山景邊吃飯\n也可準備明天回基督城路上的零食與食材。這間是西海岸較大的超市",
+        "mapLink": "",
+        "notes": "",
+        "cancelled": false,
+        "nameCn": "超市補給 (Hokitika)",
+        "nameEn": "New World Hokitika"
+      },
+      {
+        "type": "景點",
+        "time": "30mins",
+        "hours": "天黑後",
+        "facilities": [],
+        "description": "Jackson's Retreat 提供 4 個免費螢火蟲觀賞點，營地會提供紅色玻璃紙保護螢火蟲\n天黑後務必關閉手機螢幕、手電筒、閃光燈，並保持安靜",
+        "mapLink": "",
+        "notes": "免費提供給住客，需使用紅光",
+        "cancelled": false,
+        "nameCn": "螢火蟲",
+        "nameEn": "Glow Worms at Jackson's Retreat"
       }
     ],
     "accommodation": {
-      "name": "Hokitika - Hokitika's Kiwi Holiday Park and Motels",
-      "notes": "",
+      "name": "Jacksons Retreat Alpine Holiday Park",
+      "notes": "位於 Arthur's Pass 附近，提供免費螢火蟲觀賞",
       "price": "",
+      "mapLink": "https://www.google.com/maps/search/?api=1&query=Jacksons+Retreat+Alpine+Holiday+Park",
       "checkIn": "14:00 後",
       "checkOut": "10:00 前"
     },
-    "driveNotes": "福克斯冰河 → 霍基蒂卡 (駕駛時間已乘以 1.5 倍考量)"
+    "driveNotes": "福克斯冰河 → Jackson's Retreat (經 Hokitika，駕駛時間已乘以 1.5 倍考量)"
   },
   {
     "day": 16,
     "date": "3/1",
     "weekday": "日",
-    "title": "霍基蒂卡 → 基督城",
-    "route": "Hokitika → Christchurch (73號公路)",
-    "km": 250,
-    "driveTime": "6hr",
+    "title": "Arthur's Pass → 基督城",
+    "route": "Jackson's Retreat → Christchurch (73號公路)",
+    "km": 150,
+    "driveTime": "3hr",
     "activities": [
       {
         "type": "移動",
-        "time": "6hr (分段)",
+        "time": "3hr (分段)",
         "hours": "",
         "facilities": [],
-        "description": "73 號公路",
+        "description": "從 Jackson's Retreat 出發，經 Arthur's Pass，沿 73 號公路前往基督城",
         "mapLink": "",
         "notes": "駕駛時間已乘以 1.5 倍考量",
         "cancelled": false,
         "nameCn": "移動",
-        "nameEn": "Hokitika  Christchurch"
+        "nameEn": "Jackson's Retreat → Christchurch"
       },
       {
         "type": "景點",
@@ -1721,7 +1862,7 @@ export const DAYS = [
       "checkIn": "15:00 後",
       "checkOut": "11:00 前"
     },
-    "driveNotes": "73號公路，注意 Castle Hill 偷竊問題 (駕駛時間已乘以 1.5 倍考量)"
+    "driveNotes": "Jackson's Retreat → 基督城，73號公路，注意 Castle Hill 偷竊問題 (駕駛時間已乘以 1.5 倍考量)"
   },
   {
     "day": 17,
