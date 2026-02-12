@@ -23,5 +23,48 @@ export const TIPS = {
       "餅乾等"
     ],
     "noodles_note": "泡麵或杯麵內容物必須「不含肉類」"
+  },
+  "fuel_stations": {
+    "critical_points": [
+      {
+        "day": "D4",
+        "location": "Tekapo / Twizel",
+        "importance": "critical",
+        "reason": "Mt Cook 區域完全沒有加油站",
+        "distance": "D4-D5 需來回 100km"
+      },
+      {
+        "day": "D14",
+        "location": "Haast",
+        "importance": "critical",
+        "reason": "往北 120km 沒有加油站",
+        "note": "務必加滿油！手機訊號極差"
+      },
+      {
+        "day": "D15",
+        "location": "Hokitika",
+        "importance": "critical",
+        "reason": "Jackson's Retreat 山區沒有加油站",
+        "note": "明天需開 150km 到基督城"
+      }
+    ],
+    "important_points": [
+      {
+        "day": "D6",
+        "location": "Queenstown",
+        "reason": "明天前往 Manapouri 加油站稀少"
+      },
+      {
+        "day": "D7",
+        "location": "Te Anau",
+        "reason": "進入峽灣前最後大站"
+      }
+    ],
+    "general_tips": [
+      "西海岸加油站價格較貴（比北島貴 15-25%）",
+      "山區和偏遠地區加油站營業時間較短",
+      "大車油耗較高，建議預留充足油量",
+      "還車前不用加滿油（租車公司收費較高）"
+    ]
   }
 };

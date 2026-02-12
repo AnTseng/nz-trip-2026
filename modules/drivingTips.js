@@ -14,5 +14,12 @@ export const DRIVING_TIPS = {
     "94號公路 (Te Anau-Milford) 被稱為紐西蘭最美公路",
     "80號公路為庫克山公路",
     "73號公路 Hokitika→Christchurch"
-  ]
+  ],
+  "gasStationTips": {
+    "fuelType": "Diesel (柴油) - 務必確認油蓋標示",
+    "payment": "自助加油需 4 位數信用卡 PIN 碼 (預借現金密碼)",
+    "crucialPoints": "進入庫克山 (Tekapo 加滿)、西海岸 (Wanaka 加滿)、峽灣 (Te Anau 加滿)",
+    "apps": "下載 Gaspy App 找最便宜油價",
+    "ruc": "柴油車需付路稅 (RUC)，還車時結算里程"
+  }
 };

@@ -260,7 +260,8 @@
     .tc .tv{font-size:.82rem;color:var(--text-2)}
     .twarn{background:#fef0f0;border-left:3px solid #e74c3c;padding:.45rem .65rem;border-radius:0 6px 6px 0;margin-top:.4rem;font-size:.78rem;color:#7a2020}
 
-    /* ===== Customs ===== */
+    /* ===== Customs & Fuel Info ===== */
+    #customs-info,#fuel-info{margin-bottom:1.2rem}
     .customs-section{margin-top:.5rem}
     .customs-warning,.customs-declare,.customs-note{padding:.5rem .65rem;margin-bottom:.6rem;border-radius:6px;font-size:.78rem}
     .customs-warning{background:#fff5f5;border-left:3px solid #e74c3c}
@@ -407,7 +408,7 @@
         ${d.driveTime&&d.driveTime!=='0'?`<span class="st">⏱ ${d.driveTime}</span>`:''}
         ${d.route?`<span class="st">📍 ${d.route}</span>`:''}
       </div>`:''}
-      ${d.driveNotes?`<div class="dnote">📌 ${esc(d.driveNotes)}</div>`:''}
+      ${d.driveNotes?`<div class="dnote">📌 ${esc(d.driveNotes).replace(/\n/g,'<br>')}</div>`:''}
       ${(function() {
         const weather = getWeatherForDay(d.title, d.accommodation ? d.accommodation.name : '');
         if (weather) {
@@ -723,6 +724,35 @@
           </div>
         </div>`:''}
 
+        ${tp.fuel_stations?`<div class="tc" id="fuel-info">
+          <h3>⛽ 關鍵加油站提醒</h3>
+          <div class="customs-section">
+            <div class="customs-warning" style="border-left-color:#e74c3c">
+              <strong>⛽⛽⛽ 必須加油（沒有下一站）</strong>
+              <ul>${tp.fuel_stations.critical_points.map(point=>`
+                <li>
+                  <strong>${esc(point.day)} - ${esc(point.location)}</strong><br>
+                  ${esc(point.reason)}
+                  ${point.distance?`<br><span style="font-size:.85em;color:var(--text-3)">${esc(point.distance)}</span>`:''}
+                  ${point.note?`<br><span style="font-size:.85em;color:#e74c3c">${esc(point.note)}</span>`:''}
+                </li>
+              `).join('')}</ul>
+            </div>
+            <div class="customs-declare" style="border-left-color:#f39c12">
+              <strong>⛽ 建議加油（為下一段準備）</strong>
+              <ul>${tp.fuel_stations.important_points.map(point=>`
+                <li><strong>${esc(point.day)} - ${esc(point.location)}</strong><br>${esc(point.reason)}</li>
+              `).join('')}</ul>
+            </div>
+            ${tp.fuel_stations.general_tips?`<div class="customs-note">
+              <strong>💡 加油小提醒：</strong>
+              <ul style="margin:.5rem 0 0 1.2rem;padding:0">
+                ${tp.fuel_stations.general_tips.map(tip=>`<li style="font-size:.85em;line-height:1.6;margin:.2rem 0">${esc(tip)}</li>`).join('')}
+              </ul>
+            </div>`:''}
+          </div>
+        </div>`:''}
+
         <div class="tc">
           <h3>🚗 駕駛須知</h3>
           <div class="nwarn" style="margin-bottom:.5rem">⚠️ ${esc(dt.note)}</div>
@@ -739,6 +769,17 @@
           <h3>🛣️ 重要路線提醒</h3>
           <ul>${dt.importantRoutes.map(r=>`<li>${esc(r)}</li>`).join('')}</ul>
         </div>
+
+        ${dt.gasStationTips?`<div class="tc">
+          <h3>⛽ 加油須知</h3>
+          <ul>
+            <li><strong>燃料類型：</strong>${esc(dt.gasStationTips.fuelType)}</li>
+            <li><strong>付款方式：</strong>${esc(dt.gasStationTips.payment)}</li>
+            <li><strong>關鍵加油點：</strong>${esc(dt.gasStationTips.crucialPoints)}</li>
+            <li><strong>實用工具：</strong>${esc(dt.gasStationTips.apps)}</li>
+            <li><strong>路稅 (RUC)：</strong>${esc(dt.gasStationTips.ruc)}</li>
+          </ul>
+        </div>`:''}
 
         <div class="tc">
           <h3>🚐 露營車資訊</h3>

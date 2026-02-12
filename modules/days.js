@@ -524,9 +524,9 @@ export const DAYS = [
           "停車場",
           "廁所"
         ],
-        "description": "營地報到，Glentanner 位於 SH80 上，距 Mt Cook Village 約 25km (20分鐘車程)",
+        "description": "營地報到，Glentanner 位於 SH80 上，距 Mt Cook Village 約 25km (20分鐘車程)\n\n⚠️ 停車注意事項：\n• D4/D5 的步道起點都在 Mt Cook Village，每天需往返 50km\n• White Horse Hill 停車場旺季易客滿，大車(7.6m)需更大空間\n• 建議 D5 早上 06:30 出發搶停車位",
         "mapLink": "",
-        "notes": "",
+        "notes": "每天需往返 Mt Cook Village (25km/20min)",
         "cancelled": false,
         "nameCn": "",
         "nameEn": "Glentanner Park Centre Check in"
@@ -540,9 +540,9 @@ export const DAYS = [
           "廁所"
         ],
         "description": "來回 3.5km · 1.5hr · 難度簡單\n又稱 Blue Lakes and Tasman Glacier Lake Track\n起點的 Blue Lakes 是冰川融水形成的藍色小湖群，再往前走可到 Tasman 冰河湖看漂浮冰塊\n起點：Blue Lakes 停車場",
-        "mapLink": "",
+        "mapLink": "https://www.google.com/maps/search/?api=1&query=Blue+Lakes+Car+Park+Mt+Cook",
         "docLink": "https://www.doc.govt.nz/parks-and-recreation/places-to-go/canterbury/places/aoraki-mount-cook-national-park/things-to-do/tracks/tasman-lake-and-river-track/",
-        "notes": "",
+        "notes": "停車場空間較大，大車 OK",
         "cancelled": false,
         "nameCn": "塔斯曼湖步道",
         "nameEn": "Tasman Lake Track"
@@ -555,9 +555,9 @@ export const DAYS = [
           "停車場"
         ],
         "description": "來回 3km · 1hr · 難度簡單\n可欣賞 Mueller Glacier 冰川湖和庫克山景色，適合拍照\n起點：White Horse Hill 停車場",
-        "mapLink": "",
+        "mapLink": "https://www.google.com/maps/search/?api=1&query=White+Horse+Hill+Car+Park+Mt+Cook",
         "docLink": "https://www.doc.govt.nz/parks-and-recreation/places-to-go/canterbury/places/aoraki-mount-cook-national-park/things-to-do/tracks/kea-point-track/",
-        "notes": "",
+        "notes": "建議下午前往，避開停車場人潮高峰",
         "cancelled": false,
         "nameCn": "",
         "nameEn": "Kea Point Track"
@@ -570,7 +570,7 @@ export const DAYS = [
       "checkIn": "14:00-19:00",
       "checkOut": "10:00 前"
     },
-    "driveNotes": "80號公路(庫克山公路) (駕駛時間已乘以 1.5 倍考量)"
+    "driveNotes": "80號公路(庫克山公路) (駕駛時間已乘以 1.5 倍考量)\n\n⛽⛽ 重要：庫克山內完全沒有加油站！建議在 Tekapo 加滿油再進山，或在 Twizel 補給時加油。D4-D5 兩天需來回 Mt Cook Village (50km × 2天 = 100km)。"
   },
   {
     "day": 5,
@@ -582,16 +582,28 @@ export const DAYS = [
     "driveTime": "0",
     "activities": [
       {
+        "type": "參考",
+        "time": "",
+        "hours": "",
+        "facilities": [],
+        "description": "⏰ 今天的時間安排\n\n【06:30】從 Glentanner 營地出發\n↓ 開車 20 分鐘 (25km)\n【07:00 前】抵達 White Horse Hill 停車場\n\n⚠️ 為什麼要這麼早？\n\n1️⃣ 停車位極度搶手\n• 2 月是紐西蘭旺季，White Horse Hill 停車場 8-9 點後常客滿\n• 你的露營車長 7.6m，需要更大的停車空間\n• 晚到可能找不到適合大車的車位，甚至停不進去\n\n2️⃣ Sealy Tarns 是今天最重要的行程\n• 難度中高，需要 4 小時\n• 被稱為「紐西蘭的小階梯地獄」\n• 早點出發也能避開中午最熱的時段\n\n3️⃣ 完美的登山時間\n• 07:00-11:00 爬山，避開正午烈日\n• 11:00-12:00 開回 Glentanner 休息\n• 下午可選其他輕鬆步道",
+        "mapLink": "",
+        "notes": "⚠️ 務必設鬧鐘！06:00 起床，06:30 出發",
+        "cancelled": false,
+        "nameCn": "今日時間規劃",
+        "nameEn": "Today's Schedule"
+      },
+      {
         "type": "景點",
         "time": "4hr",
-        "hours": "",
+        "hours": "建議 06:30 從 Glentanner 出發",
         "facilities": [
           "停車場"
         ],
-        "description": "來回 4.5km · 4hr · 難度中高\n被稱為「紐西蘭的小階梯地獄」，連續階梯直上，登頂後可俯瞰庫克山與冰川全景\n💡 體力好可延伸至 Mueller Hut（單程 5.2km · 6-8hr · 需住山屋或折返）\n起點：White Horse Hill 停車場",
-        "mapLink": "",
+        "description": "來回 4.5km · 4hr · 難度中高\n被稱為「紐西蘭的小階梯地獄」，連續階梯直上，登頂後可俯瞰庫克山與冰川全景\n💡 體力好可延伸至 Mueller Hut（單程 5.2km · 6-8hr · 需住山屋或折返）\n起點：White Horse Hill 停車場\n\n⚠️ 務必早起：06:30 從 Glentanner 出發，07:00 前到達停車場確保停車位（7.6m大車）",
+        "mapLink": "https://www.google.com/maps/search/?api=1&query=White+Horse+Hill+Car+Park+Mt+Cook",
         "docLink": "https://www.doc.govt.nz/parks-and-recreation/places-to-go/canterbury/places/aoraki-mount-cook-national-park/things-to-do/tracks/sealy-tarns-track/",
-        "notes": "",
+        "notes": "⚠️ 最重要！務必 06:30 從 Glentanner 出發搶停車位",
         "cancelled": false,
         "nameCn": "",
         "nameEn": "Sealy Tarns Track"
@@ -604,7 +616,7 @@ export const DAYS = [
           "停車場"
         ],
         "description": "來回 4km · 2hr · 難度中等\n有陡升段但回報很高，山頂紅色水池倒映雪山景色\n起點：DOC Visitor Centre 附近",
-        "mapLink": "",
+        "mapLink": "https://www.google.com/maps/search/?api=1&query=DOC+Aoraki+Mount+Cook+Visitor+Centre",
         "docLink": "https://www.doc.govt.nz/parks-and-recreation/places-to-go/canterbury/places/aoraki-mount-cook-national-park/things-to-do/tracks/red-tarns-track/",
         "notes": "可選活動",
         "cancelled": false,
@@ -746,7 +758,7 @@ export const DAYS = [
       "checkIn": "14:00 後",
       "checkOut": "10:00 前"
     },
-    "driveNotes": "8號公路 & 80號公路｜會經過 Cromwell，若時間充裕可彈性停留水果小鎮 (駕駛時間已乘以 1.5 倍考量)"
+    "driveNotes": "8號公路 & 80號公路｜會經過 Cromwell，若時間充裕可彈性停留水果小鎮 (駕駛時間已乘以 1.5 倍考量)\n\n⛽ 加油提醒：到達 Queenstown 後建議加滿油，因為明天前往 Manapouri 的路上加油站稀少。"
   },
   {
     "day": 7,
@@ -792,7 +804,7 @@ export const DAYS = [
       "notes": "費用 3226.2 + 手續費 = 3274.59 NZD",
       "price": "3274.59 NZD"
     },
-    "driveNotes": "SH6 公路前往 Manapouri (駕駛時間已乘以 1.5 倍考量)"
+    "driveNotes": "SH6 公路前往 Manapouri (駕駛時間已乘以 1.5 倍考量)。\n⛽ 重要：Te Anau 是進入峽灣前的最後大站，建議在此加滿油。"
   },
   {
     "day": 8,
@@ -1295,6 +1307,18 @@ export const DAYS = [
         "time": "",
         "hours": "",
         "facilities": [],
+        "description": "⏰ Roy's Peak 時間規劃\n\n⚠️ 停車場容量極小，僅能容納 20-30 輛車！\n\n你有兩個選擇：\n\n【方案 A：日出團 🌅 推薦】\n\n⏰ 時間規劃：\n• 03:00 - 03:30 從 Wanaka 營地出發\n• 03:10 - 03:40 抵達 Roys Peak Track Parking\n• 03:30 - 06:30 摸黑登山（需頭燈！）\n• 06:30 - 07:30 山頂等日出 + 拍照\n• 07:30 - 10:30 下山\n• 11:00 回到營地\n\n✅ 優點：\n• 停車位絕對有（凌晨 3 點停車場是空的）\n• 看日出超值得，Lake Wanaka 的日出堪稱紐西蘭最美\n• 避開中午烈日，下山時也比較涼爽\n• 拍照光線最好（金黃色晨光）\n\n❌ 缺點：\n• 超級早起，非常累\n• 前 3 小時完全摸黑爬山，需要頭燈和保暖衣物\n• 山頂很冷（2 月也只有 5-8°C）\n\n【方案 B：一般行程 ☀️】\n\n⏰ 時間規劃：\n• 06:00 - 06:30 從 Wanaka 營地出發\n• 06:10 - 06:40 抵達停車場\n• 07:00 - 10:00 登山\n• 10:00 - 11:00 山頂拍照\n• 11:00 - 14:00 下山\n• 14:30 回到營地\n\n✅ 優點：\n• 不用摸黑，全程有陽光\n• 不需要頭燈等額外裝備\n• 比較沒那麼累\n\n❌ 缺點：\n• 停車位可能客滿（7:00 後就很難停）\n• 大車（7.6m）更難找停車位\n• 中午下山時會很熱很曬\n• 拍照光線較差（正午頂光）\n\n🚗 大車停車注意事項：\n\n• 停車場路面是碎石，沒有劃線\n• 大車盡量停外圍，不要擋住其他車\n• 如果停車場客滿，可能要停在 SH6 路邊（合法，但要注意安全）\n• 不要停在「No Parking」標示區\n\n💡 我的建議：\n\n如果你不怕累 → 選方案 A（日出團）\n• 停車絕對沒問題\n• 日出值得一看\n• 體驗感更好\n\n如果你想輕鬆一點 → 選方案 B，但務必 06:00 出發\n• 晚於 07:00 停車會非常困難",
+        "mapLink": "",
+        "notes": "⚠️ 停車位極少！日出團最保險，一般行程務必 06:00 出發",
+        "cancelled": false,
+        "nameCn": "今日時間規劃",
+        "nameEn": "Roy's Peak Schedule"
+      },
+      {
+        "type": "參考",
+        "time": "",
+        "hours": "",
+        "facilities": [],
         "description": "Roy's Peak 日出團裝備檢查清單\n\n【1. 照明設備（最重要！）】\n▸ 強光頭燈 (Headlamp)：日出團前 3 小時都在全黑中攀登。請不要只依賴手機手電筒，因為你需要雙手撐登山杖或保持平衡，且低溫會讓手機噴電。\n\n▸ 備用電池/行動電源：確保頭燈有足夠電力直到日出。\n\n【2. 洋蔥式穿搭 (Layers)】\n山腳與山頂的溫差極大，即使是 2 月（夏天）山頂也可能只有 5-8°C，且風很大。\n\n▸ 底層：排汗速乾衣（嚴禁純棉，流汗後會冷）。\n\n▸ 中層：刷毛外套 (Fleece) 或輕便羽絨衣 (Puffer Jacket)。\n\n▸ 外層：防風防水外套 (Windbreaker/Shell)。山頂等日出時，風會迅速帶走體溫。\n\n▸ 配件：毛帽 (Beanie) 與輕便手套。等日出的 30 分鐘到 1 小時，這兩樣是救命恩人。\n\n【3. 登山裝備】\n▸ 登山杖 (Hiking Poles)：強烈建議！全程是不斷重複的陡峭 Z 字型斜坡，下山對膝蓋壓力極大，這台 7.6m 的大車需要你有一雙好腿來開。\n\n▸ 好走的鞋：專業登山鞋最佳，至少也要是有抓地力的運動鞋。步道主要是碎石與草地，清晨可能有露水導致濕滑。\n\n【4. 飲食與補給】\n▸ 水：至少 2-3 公升。全程完全沒有水源可以補給。\n\n▸ 高熱量行動糧：巧克力、堅果、能量棒。清晨空腹爬坡很耗體力。\n\n▸ 熱飲 (保溫瓶)：帶一瓶熱咖啡或熱茶，在山頂等日出時喝一口，幸福感爆棚。\n\n【5. 防曬（下山用）】\n▸ 太陽眼鏡與遮陽帽：太陽升起後，回程的 3 小時會完全暴露在強烈的紐西蘭紫外線下。\n\n▸ 高係數防曬乳：下山時紫外線最毒，務必補擦。\n\n【日出團時間表（以 2 月底為例）】\n▸ 日出時間：約 7:00 AM。\n\n▸ 出發時間：建議 3:00 AM - 3:30 AM 從營地出發（開車 10 分鐘，爬坡約 3-3.5 小時）。\n\n▸ 抵達目標：建議 6:30 AM 到達著名的「打卡點」（那個細長的脊樑），拍完照再往最後的 Summit（有天線的地方）走。\n\n【特別提醒】\n▸ 廁所：步道起點有一個廁所，快到打卡點（展望台）附近也有一個，中間完全沒有，請調整好水分攝取。\n\n▸ 牛羊注意：這裡是私人農場，路途上會遇到很多羊。請保持距離，不要餵食或驚嚇牠們。\n\n▸ 裝備租借：如果沒有登山杖或頭燈，Wānaka 鎮上的戶外用品店（如 Outside Sports）可以租借或購買。",
         "mapLink": "",
         "notes": "日出團重要提醒",
@@ -1309,10 +1333,10 @@ export const DAYS = [
         "facilities": [
           "停車場"
         ],
-        "description": "15.6km · 7-8hr · 難度：難（垂直爬升 1250m）\nWanaka 最熱門步道，Lake Wanaka 最佳視角\n全程無遮蔽，一路之字形陡坡上升，需體力！\n💡 停車位有限，建議早上 6-7 點出發\n起點：Roys Peak Track Parking，距 Wanaka 小鎮 10 分鐘車程",
-        "mapLink": "",
+        "description": "15.6km · 7-8hr · 難度：難（垂直爬升 1250m）\nWanaka 最熱門步道，Lake Wanaka 最佳視角\n全程無遮蔽，一路之字形陡坡上升，需體力！\n💡 停車位極少（僅 20-30 輛車），日出團 03:00 出發或一般行程 06:00 出發\n起點：Roys Peak Track Parking，距 Wanaka 小鎮 10 分鐘車程",
+        "mapLink": "https://www.google.com/maps/search/?api=1&query=Roys+Peak+Track+Parking",
         "docLink": "https://www.doc.govt.nz/parks-and-recreation/places-to-go/otago/places/wanaka-area/things-to-do/roys-peak-track/",
-        "notes": "需早起，停車位有限",
+        "notes": "⚠️ 停車位極少！日出團 03:00 出發或一般行程 06:00 出發",
         "cancelled": false,
         "nameCn": "羅伊峰步道",
         "nameEn": "Roy's Peak Trail"
@@ -1553,9 +1577,9 @@ export const DAYS = [
           "停車場",
           "廁所"
         ],
-        "description": "遊客資訊中心",
+        "description": "遊客資訊中心\n\n⛽⛽⛽ 務必在 Haast 加滿油！\n這是前往 Fox Glacier 的最後加油站（往北約 120 km 沒有加油站）\n手機訊號極差，請務必在此加滿油",
         "mapLink": "",
-        "notes": "",
+        "notes": "⛽ 務必加滿油！最後加油站",
         "cancelled": false,
         "nameCn": "哈斯特遊客中心",
         "nameEn": "Haast Visitor Center"
@@ -1606,7 +1630,7 @@ export const DAYS = [
       "checkIn": "14:00-19:00",
       "checkOut": "10:00 前"
     },
-    "driveNotes": "西海岸6號公路：雙湖景公路→翠綠雨林→海岸線 (駕駛時間已乘以 1.5 倍考量)"
+    "driveNotes": "西海岸6號公路：雙湖景公路→翠綠雨林→海岸線 (駕駛時間已乘以 1.5 倍考量)。\n⛽ 重要：Wanaka 是進入西海岸前的最後大站，出發前務必加滿油！"
   },
   {
     "day": 15,
@@ -1762,7 +1786,7 @@ export const DAYS = [
       "checkIn": "14:00 後",
       "checkOut": "10:00 前"
     },
-    "driveNotes": "福克斯冰河 → Jackson's Retreat (經 Hokitika，駕駛時間已乘以 1.5 倍考量)"
+    "driveNotes": "福克斯冰河 → Jackson's Retreat (經 Hokitika，駕駛時間已乘以 1.5 倍考量)\n\n⛽⛽ 重要：務必在 Hokitika 加滿油！Jackson's Retreat 在山區，附近沒有加油站，且明天一早要開往基督城（150 km）。"
   },
   {
     "day": 16,
@@ -1827,21 +1851,6 @@ export const DAYS = [
         "nameEn": "Castle Hill"
       },
       {
-        "type": "景點",
-        "time": "1.5hr",
-        "hours": "7am-9pm",
-        "facilities": [
-          "停車場",
-          "廁所"
-        ],
-        "description": "基督城市區大型植物園",
-        "mapLink": "",
-        "notes": "調整至 Day 16",
-        "cancelled": false,
-        "nameCn": "基督城植物園",
-        "nameEn": "Christchurch Botanic Garden"
-      },
-      {
         "type": "作業",
         "time": "30mins",
         "hours": "14:20前",
@@ -1852,6 +1861,21 @@ export const DAYS = [
         "cancelled": false,
         "nameCn": "還車",
         "nameEn": ""
+      },
+      {
+        "type": "景點",
+        "time": "1.5hr",
+        "hours": "7am-9pm",
+        "facilities": [
+          "停車場",
+          "廁所"
+        ],
+        "description": "基督城市區大型植物園，還完車後可輕鬆步行前往",
+        "mapLink": "",
+        "notes": "還完車後前往",
+        "cancelled": false,
+        "nameCn": "基督城植物園",
+        "nameEn": "Christchurch Botanic Garden"
       }
     ],
     "accommodation": {
@@ -1862,7 +1886,7 @@ export const DAYS = [
       "checkIn": "15:00 後",
       "checkOut": "11:00 前"
     },
-    "driveNotes": "Jackson's Retreat → 基督城，73號公路，注意 Castle Hill 偷竊問題 (駕駛時間已乘以 1.5 倍考量)"
+    "driveNotes": "Jackson's Retreat → 基督城，73號公路，注意 Castle Hill 偷竊問題 (駕駛時間已乘以 1.5 倍考量)\n\n⛽ 提醒：確認油箱足夠開到基督城（150 km）。Arthur's Pass 沒有加油站。還車前不用加滿油（租車公司會收取較高費用）。"
   },
   {
     "day": 17,
