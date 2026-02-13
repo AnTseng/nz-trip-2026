@@ -246,8 +246,8 @@ export const DAYS = [
       },
       {
         "type": "景點",
-        "time": "2hr",
-        "hours": "22:15 集合",
+        "time": "90mins",
+        "hours": "22:05 抵達簽到地 · 22:15 集合",
         "facilities": [],
         "description": "Lake Tekapo 所處地區為世上極少數的「國際暗空保育區」之一，此天文台被世界天文學家公認為最適合觀察銀河及宇宙的地點之一\n\n📍 集合地點：Tekapo Chinese Stargazing 蒂卡普中文观星\nOrder Number: SP1F0BD\n\n⚠️ 重要提醒：\n• 請提前 5-10 分鐘到達簽到地點\n• 務必自駕前往（觀星營地距離鎮中心開車 7 分鐘，途經 8 號高速公路，請勿步行）\n• 自駕路線：走 Tekapo Powerhouse Road，別走 Andrew Don Drive（途經私人領地，無法通行）\n• 請多穿衣服保暖\n• 營地沒有衛生間，請提前在酒店使用",
         "mapLink": "https://www.google.com/maps/search/?api=1&query=Tekapo+Chinese+Stargazing",
