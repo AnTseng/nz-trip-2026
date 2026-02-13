@@ -1,4 +1,4 @@
-const CACHE_NAME = 'nz-trip-2026-v2';
+const CACHE_NAME = 'nz-trip-2026-v6';
 const urlsToCache = [
   '/',
   '/index.html',

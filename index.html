@@ -288,6 +288,40 @@
     .customs-section ul{margin:.3rem 0 0 1.2rem;padding:0}
     .customs-section li{margin:.2rem 0;line-height:1.4}
 
+    /* ===== Expenses ===== */
+    .exp-day-block{background:var(--surface);border-radius:var(--r-sm);box-shadow:var(--shadow);padding:.7rem;margin-top:.85rem;margin-bottom:.85rem}
+    .exp-day-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:.5rem}
+    .exp-day-title{font-size:.88rem;font-weight:600;color:var(--primary-dark);display:flex;align-items:center;gap:.3rem}
+    .exp-add-btn{padding:.3rem .6rem;background:var(--primary);color:#fff;border:none;border-radius:5px;font-size:.75rem;cursor:pointer;font-weight:500;transition:background .2s}
+    .exp-add-btn:hover{background:var(--primary-dark)}
+    .exp-list{margin-top:.5rem}
+    .exp-item{display:grid;grid-template-columns:auto 1fr auto auto;gap:.5rem;align-items:start;padding:.45rem 0;border-bottom:1px solid var(--border);font-size:.8rem}
+    .exp-item:last-child{border-bottom:none}
+    .exp-cat-icon{font-size:1.1rem;flex-shrink:0;line-height:1.4}
+    .exp-info{min-width:0}
+    .exp-name{font-weight:500;color:var(--text);line-height:1.4}
+    .exp-note{font-size:.7rem;color:var(--text-3);margin-top:.1rem;line-height:1.3}
+    .exp-amount{font-weight:600;white-space:nowrap;line-height:1.4;text-align:right}
+    .exp-del{padding:.15rem .4rem;background:#fee;color:#e74c3c;border:none;border-radius:3px;font-size:.68rem;cursor:pointer;line-height:1}
+    .exp-del:hover{background:#fcc}
+    .exp-total{display:flex;justify-content:space-between;padding:.5rem 0;margin-top:.5rem;border-top:2px solid var(--border);font-weight:600;color:var(--primary-dark)}
+    .exp-form{background:var(--bg);padding:.7rem;border-radius:var(--r-sm);margin-top:.5rem}
+    .exp-form-row{display:flex;gap:.5rem;margin-bottom:.5rem}
+    .exp-form-row:last-child{margin-bottom:0}
+    .exp-input{flex:1;padding:.4rem .5rem;border:1px solid var(--border);border-radius:5px;font-size:.8rem;font-family:var(--font)}
+    .exp-input:focus{outline:none;border-color:var(--primary)}
+    .exp-select{padding:.4rem .5rem;border:1px solid var(--border);border-radius:5px;font-size:.8rem;font-family:var(--font);background:var(--surface)}
+    .exp-btn-group{display:flex;gap:.4rem}
+    .exp-btn{flex:1;padding:.4rem;border:none;border-radius:5px;font-size:.78rem;font-weight:500;cursor:pointer}
+    .exp-btn-save{background:var(--primary);color:#fff}
+    .exp-btn-save:hover{background:var(--primary-dark)}
+    .exp-btn-cancel{background:var(--border);color:var(--text-2)}
+    .exp-btn-cancel:hover{background:#d0d0d0}
+    .exp-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.7rem;margin-bottom:1rem}
+    .exp-stat-card{background:var(--surface);border-radius:var(--r-sm);padding:.7rem;box-shadow:var(--shadow);border-left:3px solid var(--primary)}
+    .exp-stat-label{font-size:.72rem;color:var(--text-2);margin-bottom:.2rem}
+    .exp-stat-value{font-size:1.1rem;font-weight:700;color:var(--primary-dark)}
+
     /* ===== Section Title ===== */
     .stitle{font-size:1.15rem;font-weight:700;margin-bottom:.85rem;display:flex;align-items:center;gap:.4rem}
 
@@ -315,6 +349,9 @@
   // 等待 data.js 載入完成
   await import('./data.js');
 
+  // 引入 Firebase
+  import { auth, database, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, ref, set, get, onValue, update } from './firebase-config.js';
+
   (function(){
     // ===== State =====
     const S = {
@@ -323,7 +360,10 @@
       exp: new Set(),
       cl: loadCL(),
       cc: new Set(),
-      nt: loadNT()
+      nt: loadNT(),
+      expenses: loadExpenses(),
+      user: null,
+      syncEnabled: false
     };
 
     function getAutoDay(){
@@ -333,11 +373,43 @@
     function loadCL(){try{return JSON.parse(localStorage.getItem('nz26pk')||'{}')}catch(e){return{}}}
     function saveCL(){localStorage.setItem('nz26pk',JSON.stringify(S.cl))}
     function loadNT(){try{return JSON.parse(localStorage.getItem('nz26nt')||'{}')}catch(e){return{}}}
-    function saveNT(){localStorage.setItem('nz26nt',JSON.stringify(S.nt))}
+    function saveNT(){
+      localStorage.setItem('nz26nt',JSON.stringify(S.nt));
+      if(S.syncEnabled && S.user){
+        update(ref(database, 'trips/shared/notes'), S.nt).catch(e=>console.error('同步失敗:',e));
+      }
+    }
+    function loadExpenses(){try{return JSON.parse(localStorage.getItem('nz26exp')||'{}')}catch(e){return{}}}
+    function saveExpenses(){
+      localStorage.setItem('nz26exp',JSON.stringify(S.expenses));
+      if(S.syncEnabled && S.user){
+        update(ref(database, 'trips/shared/expenses'), S.expenses).catch(e=>console.error('同步失敗:',e));
+      }
+    }
 
     const FICON = {'停車場':'🅿️','廁所':'🚻','路邊停車':'🚗','付費廁所':'💰'};
     const TICON = {'景點':'📍','吃喝':'🍽️','住宿':'🏠','作業':'📋','參考':'💡'};
     const GMAP_URL = 'https://www.google.com/maps/d/u/0/viewer?mid=1I-Tn1fN0KJmqLi_xYKibtde2L8Gn2lo';
+
+    // 記帳類別
+    const EXPENSE_CATEGORIES = {
+      '餐飲': {icon: '🍽️', color: '#c8956c'},
+      '住宿': {icon: '🏨', color: '#a08060'},
+      '加油': {icon: '⛽', color: '#f39c12'},
+      '門票': {icon: '🎫', color: '#8b7da8'},
+      '購物': {icon: '🛒', color: '#e91e63'},
+      '交通': {icon: '🚗', color: '#6889a0'},
+      '其他': {icon: '📦', color: '#7f8c8d'}
+    };
+    const CURRENCIES = ['NZD', 'TWD', 'USD'];
+
+    // 用戶顏色（根據 UID 一致分配）
+    function getUserColor(uid){
+      if(!uid) return '#999';
+      const colors = ['#5b9bd5','#ff69b4','#f4c430','#4caf50','#9b59b6','#e67e22'];
+      const hash = uid.split('').reduce((acc,c)=>acc+c.charCodeAt(0),0);
+      return colors[hash % colors.length];
+    }
 
     // 判斷移動類型（飛機或開車）
     function getMoveIcon(activity, day) {
@@ -355,6 +427,7 @@
     }
 
     function renderHeader(){
+      const user = S.user;
       return `<div class="header">
         <h1>🇳🇿 紐西蘭南島 2026</h1>
         <div class="sub">${DATA.duration}</div>
@@ -362,6 +435,8 @@
           <span class="hbadge">🧭 ${DATA.tripType}路線</span>
           <span class="hbadge">🚐 露營車自駕</span>
           <span class="hbadge">👥 4人</span>
+          ${user?`<span class="hbadge" style="background:rgba(76,175,80,.3);cursor:pointer" data-a="user-menu">👤 ${esc(user.displayName||'User')}</span>`
+            :`<button class="hbadge" style="cursor:pointer;border:none;background:rgba(255,255,255,.25)" data-a="login">🔐 登入</button>`}
         </div>
         <div class="search-container">
           <input type="text" id="search-input" class="search-input" placeholder="🔍 搜尋景點、活動、住宿..." />
@@ -374,6 +449,7 @@
       const tabs = [
         {k:'itin',i:'🗓',l:'行程'},
         {k:'food',i:'🍽',l:'美食'},
+        {k:'expense',i:'💰',l:'記帳'},
         {k:'flights',i:'✈️',l:'航班'},
         {k:'check',i:'🧳',l:'行李'},
         {k:'tips',i:'📋',l:'須知'}
@@ -389,6 +465,7 @@
       switch(S.tab){
         case 'itin': return renderItin();
         case 'food': return renderFood();
+        case 'expense': return renderExpense();
         case 'flights': return renderFlights();
         case 'check': return renderCheck();
         case 'tips': return renderTips();
@@ -458,7 +535,8 @@
       <div class="nt-day">
         <div class="nt-lbl">📝 今日備註</div>
         <textarea class="nt-input" data-nk="d${d.day}" placeholder="記錄今天的想法...">${esc(S.nt['d'+d.day]||'')}</textarea>
-      </div>`;
+      </div>
+      ${renderDayExpense(d.day)}`;
     }
 
     function renderAC(a,key,day){
@@ -836,6 +914,161 @@
             <a href="${GMAP_URL}" target="_blank" rel="noopener" class="mlink" style="margin-top:0">📍 在 Google Maps 查看完整路線</a>
           </div>
         </div>
+
+        <div class="tc">
+          <h3>💾 資料備份</h3>
+          <div class="tv">備份你的備註和行李清單，避免資料遺失</div>
+          <div style="display:flex;gap:.5rem;margin-top:.7rem;flex-wrap:wrap">
+            <button class="mlink" data-a="export-data" style="cursor:pointer;border:none;margin:0">📥 匯出備份</button>
+            <label class="mlink" style="cursor:pointer;margin:0">
+              📤 匯入備份
+              <input type="file" id="import-file" accept=".json" style="display:none" data-a="import-data">
+            </label>
+          </div>
+        </div>
+      </div>`;
+    }
+
+    // ===== Expenses =====
+    function renderExpense(){
+      // 計算統計資料
+      const stats = {NZD:0, TWD:0, USD:0, total:0};
+      Object.values(S.expenses).forEach(dayExp=>{
+        dayExp.forEach(exp=>{
+          stats[exp.currency] = (stats[exp.currency]||0) + exp.amount;
+        });
+      });
+      // 換算成 TWD
+      stats.total = stats.TWD +
+        stats.NZD * DATA.currency.nzd_to_twd +
+        stats.USD * DATA.currency.usd_to_twd;
+
+      return `<div class="ct">
+        <div class="stitle">💰 記帳</div>
+
+        <div class="exp-stats">
+          <div class="exp-stat-card">
+            <div class="exp-stat-label">總花費 (TWD)</div>
+            <div class="exp-stat-value">${stats.total.toFixed(0)}</div>
+          </div>
+          <div class="exp-stat-card">
+            <div class="exp-stat-label">NZD</div>
+            <div class="exp-stat-value">${stats.NZD.toFixed(2)}</div>
+          </div>
+          <div class="exp-stat-card">
+            <div class="exp-stat-label">TWD</div>
+            <div class="exp-stat-value">${stats.TWD.toFixed(0)}</div>
+          </div>
+          <div class="exp-stat-card">
+            <div class="exp-stat-label">USD</div>
+            <div class="exp-stat-value">${stats.USD.toFixed(2)}</div>
+          </div>
+        </div>
+
+        <div class="stitle" style="font-size:1rem;margin-top:1.5rem">📋 所有花費</div>
+        ${DATA.days.map(d=>{
+          const dayKey = 'd'+d.day;
+          const dayExp = S.expenses[dayKey]||[];
+          if(dayExp.length===0) return '';
+          const dayTotal = dayExp.reduce((sum,exp)=>{
+            const inTwd = exp.currency==='TWD' ? exp.amount :
+              exp.currency==='NZD' ? exp.amount*DATA.currency.nzd_to_twd :
+              exp.amount*DATA.currency.usd_to_twd;
+            return sum+inTwd;
+          },0);
+          return `<div class="exp-day-block">
+            <div class="exp-day-h">
+              <div class="exp-day-title">D${d.day} · ${d.date}</div>
+              <div style="font-size:.78rem;color:var(--text-2)">NT$ ${dayTotal.toFixed(0)}</div>
+            </div>
+            <div class="exp-list">
+              ${dayExp.map((exp,i)=>{
+                const cat = EXPENSE_CATEGORIES[exp.category];
+                const creator = exp.createdBy ? exp.createdBy.name : '未知';
+                const userColor = exp.createdBy ? getUserColor(exp.createdBy.uid) : '#999';
+                return `<div class="exp-item">
+                  <span class="exp-cat-icon">${cat.icon}</span>
+                  <div class="exp-info">
+                    <div class="exp-name">${esc(exp.item)}</div>
+                    ${exp.note?`<div class="exp-note">${esc(exp.note)}</div>`:''}
+                    ${exp.createdBy?`<div class="exp-note" style="color:${userColor}">👤 ${esc(creator)}</div>`:''}
+                  </div>
+                  <div class="exp-amount">${exp.amount} ${exp.currency}</div>
+                  <button class="exp-del" data-a="exp-del" data-day="${dayKey}" data-idx="${i}">✕</button>
+                </div>`;
+              }).join('')}
+            </div>
+          </div>`;
+        }).join('')}
+        ${Object.keys(S.expenses).length===0?'<p style="text-align:center;color:var(--text-3);padding:2rem">尚無記帳資料</p>':''}
+      </div>`;
+    }
+
+    function renderDayExpense(day){
+      const dayKey = 'd'+day;
+      const dayExp = S.expenses[dayKey]||[];
+      const showForm = S.exp.has('exp-form-'+day);
+
+      // 計算當天總計
+      const dayTotal = dayExp.reduce((sum,exp)=>{
+        const inTwd = exp.currency==='TWD' ? exp.amount :
+          exp.currency==='NZD' ? exp.amount*DATA.currency.nzd_to_twd :
+          exp.amount*DATA.currency.usd_to_twd;
+        return sum+inTwd;
+      },0);
+
+      return `<div class="exp-day-block">
+        <div class="exp-day-h">
+          <div class="exp-day-title">💰 今日花費</div>
+          <button class="exp-add-btn" data-a="exp-add" data-day="${dayKey}">${showForm?'取消':'+ 新增'}</button>
+        </div>
+
+        ${showForm?`<div class="exp-form">
+          <div class="exp-form-row">
+            <select class="exp-select" id="exp-category-${day}" style="width:100%">
+              ${Object.keys(EXPENSE_CATEGORIES).map(cat=>{
+                const c = EXPENSE_CATEGORIES[cat];
+                return `<option value="${cat}">${c.icon} ${cat}</option>`;
+              }).join('')}
+            </select>
+          </div>
+          <div class="exp-form-row">
+            <input type="text" class="exp-input" id="exp-item-${day}" placeholder="項目名稱" />
+            <input type="number" class="exp-input" id="exp-amount-${day}" placeholder="金額" step="0.01" style="max-width:100px" />
+            <select class="exp-select" id="exp-currency-${day}" style="max-width:80px">
+              ${CURRENCIES.map(c=>`<option value="${c}"${c==='NZD'?' selected':''}>${c}</option>`).join('')}
+            </select>
+          </div>
+          <div class="exp-form-row">
+            <input type="text" class="exp-input" id="exp-note-${day}" placeholder="備註（選填）" style="width:100%" />
+          </div>
+          <div class="exp-btn-group">
+            <button class="exp-btn exp-btn-save" data-a="exp-save" data-day="${dayKey}">儲存</button>
+            <button class="exp-btn exp-btn-cancel" data-a="exp-cancel" data-day="${dayKey}">取消</button>
+          </div>
+        </div>`:''}
+
+        ${dayExp.length>0?`<div class="exp-list">
+          ${dayExp.map((exp,i)=>{
+            const cat = EXPENSE_CATEGORIES[exp.category];
+            const creator = exp.createdBy ? exp.createdBy.name : '未知';
+            const userColor = exp.createdBy ? getUserColor(exp.createdBy.uid) : '#999';
+            return `<div class="exp-item">
+              <span class="exp-cat-icon">${cat.icon}</span>
+              <div class="exp-info">
+                <div class="exp-name">${esc(exp.item)}</div>
+                ${exp.note?`<div class="exp-note">${esc(exp.note)}</div>`:''}
+                ${exp.createdBy?`<div class="exp-note" style="color:${userColor}">👤 ${esc(creator)}</div>`:''}
+              </div>
+              <div class="exp-amount">${exp.amount} ${exp.currency}</div>
+              <button class="exp-del" data-a="exp-del" data-day="${dayKey}" data-idx="${i}">✕</button>
+            </div>`;
+          }).join('')}
+          <div class="exp-total">
+            <span>當天總計</span>
+            <span>NT$ ${dayTotal.toFixed(0)}</span>
+          </div>
+        </div>`:'<p style="text-align:center;color:var(--text-3);padding:1rem;font-size:.78rem">尚無花費記錄</p>'}
       </div>`;
     }
 
@@ -896,6 +1129,84 @@
       if(a==='fc-tog'){
         const sec = t.closest('.fc-city');
         if(sec) sec.classList.toggle('open');
+      }
+
+      // 記帳相關事件
+      if(a==='exp-add'){
+        const dayKey = t.dataset.day;
+        const formKey = 'exp-form-'+dayKey.substring(1);
+        if(S.exp.has(formKey)) S.exp.delete(formKey);
+        else S.exp.add(formKey);
+        if(S.tab==='itin'){
+          const dv = document.getElementById('dv');
+          if(dv) dv.innerHTML = renderDayView();
+        }
+      }
+      if(a==='exp-cancel'){
+        const dayKey = t.dataset.day;
+        const formKey = 'exp-form-'+dayKey.substring(1);
+        S.exp.delete(formKey);
+        if(S.tab==='itin'){
+          const dv = document.getElementById('dv');
+          if(dv) dv.innerHTML = renderDayView();
+        }
+      }
+      if(a==='exp-save'){
+        const dayKey = t.dataset.day;
+        const day = dayKey.substring(1);
+        const item = document.getElementById('exp-item-'+day)?.value.trim();
+        const amount = parseFloat(document.getElementById('exp-amount-'+day)?.value);
+        const currency = document.getElementById('exp-currency-'+day)?.value;
+        const category = document.getElementById('exp-category-'+day)?.value;
+        const note = document.getElementById('exp-note-'+day)?.value.trim();
+
+        if(!item || !amount || amount<=0){
+          alert('請填寫項目名稱和有效金額');
+          return;
+        }
+
+        if(!S.expenses[dayKey]) S.expenses[dayKey]=[];
+        S.expenses[dayKey].push({
+          item, amount, currency, category, note,
+          timestamp: Date.now(),
+          createdBy: S.user ? {
+            uid: S.user.uid,
+            name: S.user.displayName || 'User',
+            photo: S.user.photoURL
+          } : null
+        });
+        saveExpenses();
+
+        S.exp.delete('exp-form-'+day);
+        if(S.tab==='itin'){
+          const dv = document.getElementById('dv');
+          if(dv) dv.innerHTML = renderDayView();
+        } else {
+          const ct = document.getElementById('ct');
+          if(ct) ct.innerHTML = renderContent();
+        }
+      }
+      if(a==='exp-del'){
+        if(!confirm('確定要刪除這筆花費嗎？')) return;
+        const dayKey = t.dataset.day;
+        const idx = Number(t.dataset.idx);
+        if(S.expenses[dayKey]){
+          S.expenses[dayKey].splice(idx,1);
+          if(S.expenses[dayKey].length===0) delete S.expenses[dayKey];
+          saveExpenses();
+        }
+        if(S.tab==='itin'){
+          const dv = document.getElementById('dv');
+          if(dv) dv.innerHTML = renderDayView();
+        } else {
+          const ct = document.getElementById('ct');
+          if(ct) ct.innerHTML = renderContent();
+        }
+      }
+
+      // Firebase 登入
+      if(a==='login'){
+        loginWithGoogle();
       }
     });
 
@@ -960,6 +1271,117 @@
       const el = document.querySelector('.dp.on');
       if(el) el.scrollIntoView({inline:'center',block:'nearest',behavior:'smooth'});
     }
+
+    // ===== Firebase 同步 =====
+    async function loginWithGoogle(){
+      try{
+        const provider = new GoogleAuthProvider();
+        const result = await signInWithPopup(auth, provider);
+        S.user = result.user;
+        S.syncEnabled = true;
+
+        // 先從 Firebase 載入資料
+        await loadFromFirebase();
+
+        // 然後上傳本地資料（如果有的話）
+        await syncToFirebase();
+
+        // 設置監聽器
+        setupFirebaseListeners();
+
+        render();
+        alert('登入成功！資料已同步');
+      }catch(err){
+        console.error('登入失敗:',err);
+        alert('登入失敗: '+err.message);
+      }
+    }
+
+    async function loadFromFirebase(){
+      if(!S.user) return;
+      const userId = 'shared';
+      try{
+        const snapshot = await get(ref(database, `trips/${userId}`));
+        if(snapshot.exists()){
+          const data = snapshot.val();
+          if(data.notes){
+            S.nt = data.notes;
+            saveNT();
+          }
+          if(data.expenses){
+            S.expenses = data.expenses;
+            saveExpenses();
+          }
+          console.log('從 Firebase 載入資料成功');
+        } else {
+          console.log('Firebase 無資料，使用本地資料');
+        }
+      }catch(err){
+        console.error('載入失敗:',err);
+      }
+    }
+
+    async function syncToFirebase(){
+      if(!S.user) return;
+      const userId = 'shared';
+      try{
+        await update(ref(database, `trips/${userId}`),{
+          notes: S.nt,
+          expenses: S.expenses,
+          lastSync: Date.now()
+        });
+        console.log('同步到 Firebase 成功');
+      }catch(err){
+        console.error('同步失敗:',err);
+      }
+    }
+
+    function setupFirebaseListeners(){
+      if(!S.user) return;
+      const userId = 'shared';
+
+      // 監聽 notes 變更
+      onValue(ref(database, `trips/${userId}/notes`), snapshot=>{
+        if(snapshot.exists()){
+          S.nt = snapshot.val();
+          saveNT();
+          if(S.tab==='itin'){
+            const dv = document.getElementById('dv');
+            if(dv) dv.innerHTML = renderDayView();
+          }
+        }
+      });
+
+      // 監聽 expenses 變更
+      onValue(ref(database, `trips/${userId}/expenses`), snapshot=>{
+        if(snapshot.exists()){
+          S.expenses = snapshot.val();
+          saveExpenses();
+          const ct = document.getElementById('ct');
+          if(ct && (S.tab==='expense' || S.tab==='itin')){
+            if(S.tab==='itin'){
+              const dv = document.getElementById('dv');
+              if(dv) dv.innerHTML = renderDayView();
+            } else {
+              ct.innerHTML = renderContent();
+            }
+          }
+        }
+      });
+    }
+
+    // 監聽登入狀態
+    onAuthStateChanged(auth, async user=>{
+      S.user = user;
+      S.syncEnabled = !!user;
+      if(user){
+        // 載入 Firebase 資料
+        await loadFromFirebase();
+        // 設置即時監聽
+        setupFirebaseListeners();
+      }
+      render();
+    });
 
     // ===== Search =====
     function debounce(fn, delay){
@@ -1142,12 +1564,16 @@
 
   <!-- Service Worker Registration -->
   <script>
-    if ('serviceWorker' in navigator) {
+    // 開發模式：禁用 Service Worker（localhost）
+    // 生產模式：啟用 Service Worker
+    if ('serviceWorker' in navigator && location.hostname !== 'localhost') {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('/sw.js')
           .then(reg => console.log('Service Worker 註冊成功:', reg.scope))
           .catch(err => console.log('Service Worker 註冊失敗:', err));
       });
+    } else {
+      console.log('開發模式：Service Worker 已禁用');
     }
   </script>
 </body>
