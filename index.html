@@ -51,6 +51,21 @@
     .header .badges{display:flex;justify-content:center;gap:.5rem;flex-wrap:wrap}
     .header .hbadge{display:inline-flex;align-items:center;gap:.25rem;background:rgba(255,255,255,.18);padding:.2rem .7rem;border-radius:20px;font-size:.72rem;backdrop-filter:blur(4px)}
 
+    /* ===== Search ===== */
+    .search-container{position:relative;margin-top:1rem;max-width:400px;margin-left:auto;margin-right:auto}
+    .search-input{width:100%;padding:.5rem .75rem;border:none;border-radius:8px;font-size:.82rem;background:rgba(255,255,255,.9);color:var(--text);outline:none;transition:all .2s}
+    .search-input::placeholder{color:var(--text-3)}
+    .search-input:focus{background:#fff;box-shadow:0 4px 12px rgba(0,0,0,.15)}
+    .search-results{position:absolute;top:calc(100% + .5rem);left:0;right:0;background:#fff;border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:400px;overflow-y:auto;z-index:1000;display:none}
+    .search-results.show{display:block}
+    .search-result-item{padding:.65rem .85rem;border-bottom:1px solid var(--border);cursor:pointer;transition:background .15s}
+    .search-result-item:last-child{border-bottom:none}
+    .search-result-item:hover{background:var(--primary-light)}
+    .search-result-type{display:inline-block;padding:.12rem .35rem;border-radius:3px;font-size:.6rem;font-weight:700;letter-spacing:.02em;margin-right:.4rem}
+    .search-result-name{font-size:.85rem;font-weight:500;color:var(--text);display:block;margin-bottom:.15rem}
+    .search-result-meta{font-size:.7rem;color:var(--text-3)}
+    .search-no-results{padding:1rem;text-align:center;color:var(--text-3);font-size:.8rem}
+
     /* ===== Tabs ===== */
     .tabs{display:flex;background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:999;box-shadow:0 2px 4px rgba(0,0,0,0.05)}
     .tab{flex:1;text-align:center;padding:.5rem 0 .45rem;font-size:.75rem;font-weight:500;color:var(--text-2);cursor:pointer;border-bottom:2.5px solid transparent;transition:all .2s;user-select:none}
@@ -348,6 +363,10 @@
           <span class="hbadge">🚐 露營車自駕</span>
           <span class="hbadge">👥 4人</span>
         </div>
+        <div class="search-container">
+          <input type="text" id="search-input" class="search-input" placeholder="🔍 搜尋景點、活動、住宿..." />
+          <div id="search-results" class="search-results"></div>
+        </div>
       </div>`;
     }
 
@@ -474,6 +493,7 @@
           ${a.ticket?`<div class="ah-ticket">🎫 ${esc(a.ticket)}</div>`:''}
           ${a.notes?(a.notes.includes('TODO')?`<div class="ntodo">📌 ${esc(a.notes)}</div>`:`<div class="nwarn">${esc(a.notes)}</div>`):''}
           ${a.docLink?`<a class="mlink doc" href="${a.docLink}" target="_blank" rel="noopener">📋 DOC 步道資訊</a>`:''}
+          ${a.routeMapLink?`<a class="mlink" href="${a.routeMapLink}" target="_blank" rel="noopener">🗺️ 地圖說明</a>`:''}
           ${a.type!=='移動'?`<a class="mlink" href="${getMapUrl(a)}" target="_blank" rel="noopener">📍 Google Maps</a>`:''}
           <div class="nt-card">
             <textarea class="nt-input" data-nk="${key}" placeholder="📝 寫下備註...">${esc(noteVal)}</textarea>
@@ -515,6 +535,7 @@
               ${a.ticket?`<div class="ah-ticket">🎫 ${esc(a.ticket)}</div>`:''}
               ${a.notes?`<div class="nwarn">📌 ${esc(a.notes)}</div>`:''}
               ${a.docLink?`<a class="mlink doc" href="${a.docLink}" target="_blank" rel="noopener">📋 DOC 步道資訊</a>`:''}
+              ${a.routeMapLink?`<a class="mlink" href="${a.routeMapLink}" target="_blank" rel="noopener">🗺️ 地圖說明</a>`:''}
               ${a.type!=='移動'?`<a class="mlink" href="${getMapUrl(a)}" target="_blank" rel="noopener">📍 Google Maps</a>`:''}
               <div class="nt-card">
                 <textarea class="nt-input" data-nk="${key}" placeholder="📝 寫下備註...">${esc(noteVal)}</textarea>
@@ -940,11 +961,181 @@
       if(el) el.scrollIntoView({inline:'center',block:'nearest',behavior:'smooth'});
     }
 
+    // ===== Search =====
+    function debounce(fn, delay){
+      let timer;
+      return function(...args){
+        clearTimeout(timer);
+        timer = setTimeout(()=>fn.apply(this,args), delay);
+      };
+    }
+
+    function searchAll(query){
+      if(!query || query.length<2) return [];
+      const q = query.toLowerCase();
+      const results = [];
+
+      // 搜尋行程活動
+      DATA.days.forEach(d=>{
+        d.activities.forEach((a,idx)=>{
+          if(a.cancelled) return;
+          const name = getDisplayName(a).toLowerCase();
+          const desc = (a.description||'').toLowerCase();
+          if(name.includes(q)||desc.includes(q)){
+            results.push({
+              type:'activity',
+              typeCn:a.type,
+              name:getDisplayName(a),
+              meta:`D${d.day} · ${d.date}`,
+              day:d.day,
+              key:d.day+'-'+idx
+            });
+          }
+        });
+        // 搜尋住宿
+        if(d.accommodation&&d.accommodation.name){
+          const name = d.accommodation.name.toLowerCase();
+          if(name.includes(q)){
+            results.push({
+              type:'accommodation',
+              typeCn:'住宿',
+              name:d.accommodation.name,
+              meta:`D${d.day} · ${d.date}`,
+              day:d.day,
+              key:'acc-'+d.day
+            });
+          }
+        }
+      });
+
+      // 搜尋美食
+      DATA.food.forEach(g=>{
+        g.items.forEach(r=>{
+          const name = r.name.toLowerCase();
+          const note = (r.note||'').toLowerCase();
+          if(name.includes(q)||note.includes(q)){
+            results.push({
+              type:'food',
+              typeCn:'美食',
+              name:r.name,
+              meta:`${g.city} · ${g.days}`,
+              city:g.city
+            });
+          }
+        });
+      });
+
+      return results.slice(0,20); // 最多顯示20個結果
+    }
+
+    function renderSearchResults(results){
+      const container = document.getElementById('search-results');
+      if(!container) return;
+
+      if(!results||results.length===0){
+        container.innerHTML = '<div class="search-no-results">找不到相關結果</div>';
+        container.classList.add('show');
+        return;
+      }
+
+      const typeColors = {
+        '景點':'#2a7c6f','吃喝':'#c8956c','移動':'#6889a0','作業':'#8b7da8','住宿':'#a08060','參考':'#d97706','美食':'#c8956c'
+      };
+      const typeBgs = {
+        '景點':'#e6f2ef','吃喝':'#fdf0e5','移動':'#e8f0f5','作業':'#eeeaf5','住宿':'#f5efe8','參考':'#fef3c7','美食':'#fdf0e5'
+      };
+
+      container.innerHTML = results.map((r,i)=>{
+        const color = typeColors[r.typeCn]||'#888';
+        const bg = typeBgs[r.typeCn]||'#f0f0f0';
+        return `<div class="search-result-item" data-sr="${i}">
+          <span class="search-result-type" style="background:${bg};color:${color}">${esc(r.typeCn)}</span>
+          <span class="search-result-name">${esc(r.name)}</span>
+          <span class="search-result-meta">${esc(r.meta)}</span>
+        </div>`;
+      }).join('');
+      container.classList.add('show');
+    }
+
+    function navigateToResult(result){
+      if(result.type==='activity'||result.type==='accommodation'){
+        // 切換到行程頁籤
+        S.tab='itin';
+        S.day=result.day;
+        S.exp.clear();
+        render();
+        // 滾動到對應的天
+        raf(()=>{
+          window.scrollTo({top:200,behavior:'smooth'});
+          // 展開對應的卡片
+          if(result.key){
+            raf(()=>{
+              S.exp.add(result.key);
+              const card = document.querySelector(`[data-k="${result.key}"]`);
+              if(card){
+                card.classList.add('ex');
+                raf(()=>card.scrollIntoView({behavior:'smooth',block:'center'}));
+              }
+            });
+          }
+        });
+      } else if(result.type==='food'){
+        // 切換到美食頁籤
+        S.tab='food';
+        S.exp.clear();
+        render();
+        raf(()=>window.scrollTo({top:0,behavior:'smooth'}));
+      }
+      // 關閉搜尋結果
+      const searchInput = document.getElementById('search-input');
+      const searchResults = document.getElementById('search-results');
+      if(searchInput) searchInput.value='';
+      if(searchResults) searchResults.classList.remove('show');
+    }
+
     // ===== Init =====
     if(typeof DATA==='undefined'){
       document.getElementById('app').innerHTML='<p style="padding:3rem;text-align:center;color:var(--text-2)">⚠️ 找不到行程資料，請確認 data.js 檔案存在</p>';
     } else {
       render();
+
+      // 搜尋功能初始化
+      let searchResults = [];
+      const handleSearch = debounce((e)=>{
+        const query = e.target.value.trim();
+        if(query.length<2){
+          const container = document.getElementById('search-results');
+          if(container) container.classList.remove('show');
+          return;
+        }
+        searchResults = searchAll(query);
+        renderSearchResults(searchResults);
+      }, 300);
+
+      document.addEventListener('input',(e)=>{
+        if(e.target.id==='search-input'){
+          handleSearch(e);
+        }
+      });
+
+      document.addEventListener('click',(e)=>{
+        // 點擊搜尋結果項
+        const resultItem = e.target.closest('.search-result-item');
+        if(resultItem){
+          const idx = Number(resultItem.dataset.sr);
+          if(searchResults[idx]){
+            navigateToResult(searchResults[idx]);
+          }
+          return;
+        }
+
+        // 點擊外部關閉搜尋結果
+        const searchContainer = e.target.closest('.search-container');
+        if(!searchContainer){
+          const container = document.getElementById('search-results');
+          if(container) container.classList.remove('show');
+        }
+      });
     }
   })();
   </script>

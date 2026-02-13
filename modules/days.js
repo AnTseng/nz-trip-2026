@@ -243,6 +243,20 @@ export const DAYS = [
         "cancelled": false,
         "nameCn": "超市補給 (Tekapo)",
         "nameEn": "Four Square Tekapo"
+      },
+      {
+        "type": "景點",
+        "time": "2hr",
+        "hours": "22:15 集合",
+        "facilities": [],
+        "description": "Lake Tekapo 所處地區為世上極少數的「國際暗空保育區」之一，此天文台被世界天文學家公認為最適合觀察銀河及宇宙的地點之一\n\n📍 集合地點：Tekapo Chinese Stargazing 蒂卡普中文观星\nOrder Number: SP1F0BD\n\n⚠️ 重要提醒：\n• 請提前 5-10 分鐘到達簽到地點\n• 務必自駕前往（觀星營地距離鎮中心開車 7 分鐘，途經 8 號高速公路，請勿步行）\n• 自駕路線：走 Tekapo Powerhouse Road，別走 Andrew Don Drive（途經私人領地，無法通行）\n• 請多穿衣服保暖\n• 營地沒有衛生間，請提前在酒店使用",
+        "mapLink": "https://www.google.com/maps/search/?api=1&query=Tekapo+Chinese+Stargazing",
+        "routeMapLink": "https://emailclick.rezdy.com/ls/click?upn=u001.UVkExJVFXH3CP72qbGSnC6s12N2Kca7K-2BChWd6Sb2-2F-2BnDPLg7KgwYm3XZfrTERUjZ9-2FNkLkj8w-2FJB7WvY7a1HkUdtZSb6XKbohDP9gQbGs2Z1t8imCJD-2FV6z-2BP-2BgcyMXJi1Z_B4-2FTMxrVs1SGzk-2ByAPQoRW9bS-2BO0TNM7L6D635Bn9MCIyB8UvqJ3jrvTQu-2BronkcPa3S1i2ZAjn9NqAcUBGJ1dbuMpowvpsYG739ZS-2BKfYkZmF1KlOVllORiOqV6-2FyfKHO2YYi8LTsTp9jGLd8cKSfPr0jdm4ZOS858DUcpES5RfJZqTGY-2BZR8OuxfsN28dNWmGmI1dJb6bPllIxwRNa1RF65camWAGsDDtZNOm-2BxGcZ3Z6anbFtTpeJFkKxkOw881-2B1QlJNKTf5FT3P8nWMANm0-2F-2B3dI7ksTh1d0dUJrreUZTssX1pR5LT03Baf5ObzDujtiRyIKDgGhCBn8lEqiw-3D-3D",
+        "notes": "Order Number: SP1F0BD · 如沒有車輛請提前聯繫預定付費接駁服務",
+        "ticket": "$94.05 NZD/人",
+        "cancelled": false,
+        "nameCn": "觀星行程",
+        "nameEn": "Tekapo Chinese Stargazing"
       }
     ],
     "accommodation": {
@@ -328,19 +342,6 @@ export const DAYS = [
         "cancelled": false,
         "nameCn": "炸魚薯條",
         "nameEn": "The Better Batter NZ"
-      },
-      {
-        "type": "景點",
-        "time": "2hr",
-        "hours": "夜間",
-        "facilities": [],
-        "description": "Lake Tekapo 所處地區為世上極少數的「國際暗空保育區」之一，此天文台被世界天文學家公認為最適合觀察銀河及宇宙的地點之一",
-        "mapLink": "",
-        "notes": "TODO: 購買行程",
-        "ticket": "$209 NZD/人 · 家庭票(2大2小) $353 NZD",
-        "cancelled": false,
-        "nameCn": "觀星行程",
-        "nameEn": "Mt. John Observatory - Night Sky Tours"
       }
     ],
     "accommodation": {
