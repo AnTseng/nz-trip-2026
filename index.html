@@ -349,8 +349,28 @@
   // 等待 data.js 載入完成
   await import('./data.js');
 
-  // 引入 Firebase
-  import { auth, database, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, ref, set, get, onValue, update } from './firebase-config.js';
+  // 嘗試引入 Firebase（離線時會失敗，但不影響核心功能）
+  let auth, database, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, ref, set, get, onValue, update;
+  let firebaseAvailable = false;
+
+  try {
+    const firebase = await import('./firebase-config.js');
+    auth = firebase.auth;
+    database = firebase.database;
+    signInWithPopup = firebase.signInWithPopup;
+    GoogleAuthProvider = firebase.GoogleAuthProvider;
+    onAuthStateChanged = firebase.onAuthStateChanged;
+    ref = firebase.ref;
+    set = firebase.set;
+    get = firebase.get;
+    onValue = firebase.onValue;
+    update = firebase.update;
+    firebaseAvailable = true;
+    console.log('Firebase 已載入');
+  } catch (err) {
+    console.log('離線模式：Firebase 無法載入，使用本地儲存');
+    firebaseAvailable = false;
+  }
 
   (function(){
     // ===== State =====
@@ -375,14 +395,14 @@
     function loadNT(){try{return JSON.parse(localStorage.getItem('nz26nt')||'{}')}catch(e){return{}}}
     function saveNT(){
       localStorage.setItem('nz26nt',JSON.stringify(S.nt));
-      if(S.syncEnabled && S.user){
+      if(firebaseAvailable && S.syncEnabled && S.user){
         update(ref(database, 'trips/shared/notes'), S.nt).catch(e=>console.error('同步失敗:',e));
       }
     }
     function loadExpenses(){try{return JSON.parse(localStorage.getItem('nz26exp')||'{}')}catch(e){return{}}}
     function saveExpenses(){
       localStorage.setItem('nz26exp',JSON.stringify(S.expenses));
-      if(S.syncEnabled && S.user){
+      if(firebaseAvailable && S.syncEnabled && S.user){
         update(ref(database, 'trips/shared/expenses'), S.expenses).catch(e=>console.error('同步失敗:',e));
       }
     }
@@ -436,7 +456,8 @@
           <span class="hbadge">🚐 露營車自駕</span>
           <span class="hbadge">👥 4人</span>
           ${user?`<span class="hbadge" style="background:rgba(76,175,80,.3);cursor:pointer" data-a="user-menu">👤 ${esc(user.displayName||'User')}</span>`
-            :`<button class="hbadge" style="cursor:pointer;border:none;background:rgba(255,255,255,.25)" data-a="login">🔐 登入</button>`}
+            :firebaseAvailable?`<button class="hbadge" style="cursor:pointer;border:none;background:rgba(255,255,255,.25)" data-a="login">🔐 登入</button>`
+            :`<span class="hbadge" style="background:rgba(158,158,158,.3)" title="離線模式">📡 離線</span>`}
         </div>
         <div class="search-container">
           <input type="text" id="search-input" class="search-input" placeholder="🔍 搜尋景點、活動、住宿..." />
@@ -644,7 +665,7 @@
           ${acc.price?`<p class="aprice">💰 ${esc(acc.price)}</p>`:''}
           ${acc.checkIn?`<p>🔑 Check-in: ${esc(acc.checkIn)}</p>`:''}
           ${acc.checkOut?`<p>🚪 Check-out: ${esc(acc.checkOut)}</p>`:''}
-          ${acc.notes?`<p>${esc(acc.notes)}</p>`:''}
+          ${acc.notes?`<p style="white-space:pre-line">${esc(acc.notes)}</p>`:''}
           ${mapUrl?`<a class="mlink" href="${mapUrl}" target="_blank" rel="noopener">📍 Google Maps</a>`:''}
           <div class="nt-card">
             <textarea class="nt-input" data-nk="${akey}" placeholder="📝 住宿備註...">${esc(noteVal)}</textarea>
@@ -1274,6 +1295,10 @@
 
     // ===== Firebase 同步 =====
     async function loginWithGoogle(){
+      if(!firebaseAvailable){
+        alert('離線模式：無法使用同步功能');
+        return;
+      }
       try{
         const provider = new GoogleAuthProvider();
         const result = await signInWithPopup(auth, provider);
@@ -1370,18 +1395,20 @@
       });
     }
 
-    // 監聽登入狀態
-    onAuthStateChanged(auth, async user=>{
-      S.user = user;
-      S.syncEnabled = !!user;
-      if(user){
-        // 載入 Firebase 資料
-        await loadFromFirebase();
-        // 設置即時監聽
-        setupFirebaseListeners();
-      }
-      render();
-    });
+    // 監聽登入狀態（僅在 Firebase 可用時）
+    if(firebaseAvailable){
+      onAuthStateChanged(auth, async user=>{
+        S.user = user;
+        S.syncEnabled = !!user;
+        if(user){
+          // 載入 Firebase 資料
+          await loadFromFirebase();
+          // 設置即時監聽
+          setupFirebaseListeners();
+        }
+        render();
+      });
+    }
 
     // ===== Search =====
     function debounce(fn, delay){
